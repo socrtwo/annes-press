@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:networkSecurityConfig="@xml/network_security_config"
+        android:theme="@style/AppTheme">
+
+        <activity
+            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|smallestScreenSize|screenLayout|uiMode|navigation|density"
+            android:name=".MainActivity"
+            android:label="@string/title_activity_main"
+            android:theme="@style/AppTheme.NoActionBarLaunch"
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="adjustResize"
+            android:exported="true">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+            <!-- "Open with QuillPress" for publications, text and pictures identified by MIME type
+                 (a mimeType-only <data> matches content: and file: URIs). -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <action android:name="android.intent.action.EDIT" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="application/x-quillpress" />
+                <data android:mimeType="application/x-quillpress-encrypted" />
+                <data android:mimeType="application/x-scribus" />
+                <data android:mimeType="application/vnd.adobe.indesign-idml-package" />
+                <data android:mimeType="application/x-indesign" />
+                <data android:mimeType="application/x-mspublisher" />
+                <data android:mimeType="application/vnd.quark.quarkxpress" />
+                <data android:mimeType="application/x-pagemaker" />
+                <data android:mimeType="application/x-mif" />
+                <data android:mimeType="text/x-xpress-tags" />
+                <data android:mimeType="application/json" />
+                <data android:mimeType="image/svg+xml" />
+                <data android:mimeType="text/markdown" />
+                <data android:mimeType="text/plain" />
+                <data android:mimeType="application/rtf" />
+                <data android:mimeType="text/rtf" />
+                <data android:mimeType="text/html" />
+                <data android:mimeType="application/vnd.openxmlformats-officedocument.wordprocessingml.document" />
+                <data android:mimeType="image/png" />
+                <data android:mimeType="image/jpeg" />
+                <data android:mimeType="image/gif" />
+                <data android:mimeType="image/webp" />
+                <data android:mimeType="image/bmp" />
+                <data android:mimeType="image/tiff" />
+            </intent-filter>
+
+            <!-- Files whose provider reports a generic MIME type: match on extension.
+                 Several pathPatterns per extension because Android's matcher is
+                 non-greedy and stops at the first dot. Upper-case variants cover
+                 names such as ISSUE.QPP from Windows shares. -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:scheme="content" />
+                <data android:scheme="file" />
+                <data android:host="*" />
+                <data android:mimeType="application/octet-stream" />
+                <data android:mimeType="application/zip" />
+                <data android:mimeType="application/x-zip-compressed" />
+                <data android:mimeType="application/xml" />
+                <data android:mimeType="text/xml" />
+                <data android:pathPattern=".*\\.qpp" />
+                <data android:pathPattern=".*\\..*\\.qpp" />
+                <data android:pathPattern=".*\\..*\\..*\\.qpp" />
+                <data android:pathPattern=".*\\.QPP" />
+                <data android:pathPattern=".*\\..*\\.QPP" />
+                <data android:pathPattern=".*\\..*\\..*\\.QPP" />
+                <data android:pathPattern=".*\\.qppe" />
+                <data android:pathPattern=".*\\..*\\.qppe" />
+                <data android:pathPattern=".*\\..*\\..*\\.qppe" />
+                <data android:pathPattern=".*\\.QPPE" />
+                <data android:pathPattern=".*\\..*\\.QPPE" />
+                <data android:pathPattern=".*\\..*\\..*\\.QPPE" />
+                <data android:pathPattern=".*\\.sla" />
+                <data android:pathPattern=".*\\..*\\.sla" />
+                <data android:pathPattern=".*\\..*\\..*\\.sla" />
+                <data android:pathPattern=".*\\.SLA" />
+                <data android:pathPattern=".*\\..*\\.SLA" />
+                <data android:pathPattern=".*\\..*\\..*\\.SLA" />
+                <data android:pathPattern=".*\\.idml" />
+                <data android:pathPattern=".*\\..*\\.idml" />
+                <data android:pathPattern=".*\\..*\\..*\\.idml" />
+                <data android:pathPattern=".*\\.IDML" />
+                <data android:pathPattern=".*\\..*\\.IDML" />
+                <data android:pathPattern=".*\\..*\\..*\\.IDML" />
+                <data android:pathPattern=".*\\.indd" />
+                <data android:pathPattern=".*\\..*\\.indd" />
+                <data android:pathPattern=".*\\..*\\..*\\.indd" />
+                <data android:pathPattern=".*\\.INDD" />
+                <data android:pathPattern=".*\\..*\\.INDD" />
+                <data android:pathPattern=".*\\..*\\..*\\.INDD" />
+                <data android:pathPattern=".*\\.pub" />
+                <data android:pathPattern=".*\\..*\\.pub" />
+                <data android:pathPattern=".*\\..*\\..*\\.pub" />
+                <data android:pathPattern=".*\\.PUB" />
+                <data android:pathPattern=".*\\..*\\.PUB" />
+                <data android:pathPattern=".*\\..*\\..*\\.PUB" />
+                <data android:pathPattern=".*\\.qxp" />
+                <data android:pathPattern=".*\\..*\\.qxp" />
+                <data android:pathPattern=".*\\..*\\..*\\.qxp" />
+                <data android:pathPattern=".*\\.QXP" />
+                <data android:pathPattern=".*\\..*\\.QXP" />
+                <data android:pathPattern=".*\\..*\\..*\\.QXP" />
+                <data android:pathPattern=".*\\.qxd" />
+                <data android:pathPattern=".*\\..*\\.qxd" />
+                <data android:pathPattern=".*\\..*\\..*\\.qxd" />
+                <data android:pathPattern=".*\\.QXD" />
+                <data android:pathPattern=".*\\..*\\.QXD" />
+                <data android:pathPattern=".*\\..*\\..*\\.QXD" />
+                <data android:pathPattern=".*\\.pmd" />
+                <data android:pathPattern=".*\\..*\\.pmd" />
+                <data android:pathPattern=".*\\..*\\..*\\.pmd" />
+                <data android:pathPattern=".*\\.PMD" />
+                <data android:pathPattern=".*\\..*\\.PMD" />
+                <data android:pathPattern=".*\\..*\\..*\\.PMD" />
+                <data android:pathPattern=".*\\.p65" />
+                <data android:pathPattern=".*\\..*\\.p65" />
+                <data android:pathPattern=".*\\..*\\..*\\.p65" />
+                <data android:pathPattern=".*\\.P65" />
+                <data android:pathPattern=".*\\..*\\.P65" />
+                <data android:pathPattern=".*\\..*\\..*\\.P65" />
+                <data android:pathPattern=".*\\.mif" />
+                <data android:pathPattern=".*\\..*\\.mif" />
+                <data android:pathPattern=".*\\..*\\..*\\.mif" />
+                <data android:pathPattern=".*\\.MIF" />
+                <data android:pathPattern=".*\\..*\\.MIF" />
+                <data android:pathPattern=".*\\..*\\..*\\.MIF" />
+                <data android:pathPattern=".*\\.xtg" />
+                <data android:pathPattern=".*\\..*\\.xtg" />
+                <data android:pathPattern=".*\\..*\\..*\\.xtg" />
+                <data android:pathPattern=".*\\.XTG" />
+                <data android:pathPattern=".*\\..*\\.XTG" />
+                <data android:pathPattern=".*\\..*\\..*\\.XTG" />
+            </intent-filter>
+
+            <!-- Receive publications, text and pictures shared from other apps. -->
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="application/x-quillpress" />
+                <data android:mimeType="application/x-quillpress-encrypted" />
+                <data android:mimeType="application/x-scribus" />
+                <data android:mimeType="application/vnd.adobe.indesign-idml-package" />
+                <data android:mimeType="application/x-indesign" />
+                <data android:mimeType="application/x-mspublisher" />
+                <data android:mimeType="application/vnd.quark.quarkxpress" />
+                <data android:mimeType="application/x-pagemaker" />
+                <data android:mimeType="application/x-mif" />
+                <data android:mimeType="text/x-xpress-tags" />
+                <data android:mimeType="application/json" />
+                <data android:mimeType="image/svg+xml" />
+                <data android:mimeType="text/markdown" />
+                <data android:mimeType="text/plain" />
+                <data android:mimeType="application/rtf" />
+                <data android:mimeType="text/rtf" />
+                <data android:mimeType="text/html" />
+                <data android:mimeType="application/vnd.openxmlformats-officedocument.wordprocessingml.document" />
+                <data android:mimeType="image/png" />
+                <data android:mimeType="image/jpeg" />
+                <data android:mimeType="image/gif" />
+                <data android:mimeType="image/webp" />
+                <data android:mimeType="image/bmp" />
+                <data android:mimeType="image/tiff" />
+            </intent-filter>
+
+        </activity>
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths"></meta-data>
+        </provider>
+    </application>
+
+    <!-- The Quill apps this one can hand documents to (Android 11+ package visibility). -->
+    <queries>
+        <package android:name="io.github.socrtwo.quillpen" />
+        <package android:name="io.github.socrtwo.quillpost" />
+        <package android:name="io.github.socrtwo.quillgrid" />
+        <package android:name="io.github.socrtwo.quillstage" />
+        <package android:name="io.github.socrtwo.quillloom" />
+        <package android:name="io.github.socrtwo.quillfolio" />
+    </queries>
+
+    <!-- Permissions -->
+
+    <uses-permission android:name="android.permission.INTERNET" />
+</manifest>

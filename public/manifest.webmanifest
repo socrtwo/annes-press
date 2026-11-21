@@ -1,0 +1,69 @@
+{
+  "name": "QuillPress",
+  "short_name": "QuillPress",
+  "description": "An open-source desktop publishing and page layout app: frame-based pages, master pages, linked text, styles and PDF export, with a complete, customizable command library.",
+  "id": "./",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "display_override": [
+    "window-controls-overlay",
+    "standalone"
+  ],
+  "background_color": "#ffffff",
+  "theme_color": "#3E2672",
+  "categories": [
+    "productivity",
+    "business",
+    "graphics"
+  ],
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "file_handlers": [
+    {
+      "action": "./",
+      "name": "Publication",
+      "accept": {
+        "application/x-quillpress": [
+          ".qpp"
+        ],
+        "application/x-quillpress-encrypted": [
+          ".qppe"
+        ],
+        "application/x-scribus": [
+          ".sla"
+        ],
+        "application/json": [
+          ".json"
+        ],
+        "image/svg+xml": [
+          ".svg"
+        ]
+      }
+    }
+  ]
+}
