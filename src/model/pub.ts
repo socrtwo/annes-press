@@ -284,7 +284,7 @@ export class Pub {
   }
 
   static fromJSON(j: any): Pub {
-    if (!j || typeof j !== 'object' || !j.data) throw new Error('Not a QuillPress publication.');
+    if (!j || typeof j !== 'object' || !j.data) throw new Error('Not an Anne\'s Press publication.');
     const p = new Pub(Pub.sanitize(j.data));
     p.media = j.media && typeof j.media === 'object' ? j.media : {};
     return p;

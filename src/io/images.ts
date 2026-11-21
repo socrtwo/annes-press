@@ -82,12 +82,12 @@ export async function mediaFromBytes(data: Uint8Array, name: string): Promise<Me
   if (mime === 'image/wmf' || mime === 'image/emf') {
     // Windows metafiles are drawn as SVG: the browser cannot show them, and the drawing stays vector.
     const svg = metafileToSvg(data);
-    if (!svg) throw new Error('This Windows metafile draws nothing QuillPress can show (it may be empty or damaged).');
+    if (!svg) throw new Error('This Windows metafile draws nothing Anne\'s Press can show (it may be empty or damaged).');
     return { mime: 'image/svg+xml', b64: b64(new TextEncoder().encode(svg.svg)), name: name.replace(/\.(wmf|emf)$/i, '.svg'), w: Math.round(svg.w * 100) / 100, h: Math.round(svg.h * 100) / 100 };
   }
   if (mime === 'image/tiff') {
     const bmp = tiffToBmp(data);
-    if (!bmp) throw new Error('This TIFF uses a compression or color mode QuillPress cannot read yet.');
+    if (!bmp) throw new Error('This TIFF uses a compression or color mode Anne\'s Press cannot read yet.');
     bytes = bmp; mime = 'image/bmp';
   }
   const size = await imageSize(mime, bytes);

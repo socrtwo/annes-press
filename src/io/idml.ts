@@ -7,7 +7,7 @@
  * picture frames (embedded pictures, or the linked file's name when the picture lives outside the
  * package, as IDML normally does); paragraph, character and object styles; colors, tints and
  * gradients; sections and text variables; stories with style ranges, forced line breaks, tables (as
- * tab-separated rows) and footnotes. Everything is in points, as in QuillPress.
+ * tab-separated rows) and footnotes. Everything is in points, as in Anne's Press.
  */
 import JSZip from 'jszip';
 import { Pub, newId } from '../model/pub';

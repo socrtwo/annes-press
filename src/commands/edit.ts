@@ -426,7 +426,7 @@ def([
       const c = app.clip;
       const opts = [
         ...(c?.kind === 'pages' ? [{ value: 'edit.pasteObjects', label: 'Pages after the current page' }] : []),
-        ...(c?.kind === 'items' ? [{ value: 'edit.pasteObjects', label: 'QuillPress objects' }, { value: 'edit.pasteInPlace', label: 'Objects in place' }, { value: 'edit.pastePicture', label: 'Picture (SVG)' }] : []),
+        ...(c?.kind === 'items' ? [{ value: 'edit.pasteObjects', label: 'Anne\'s Press objects' }, { value: 'edit.pasteInPlace', label: 'Objects in place' }, { value: 'edit.pastePicture', label: 'Picture (SVG)' }] : []),
         { value: 'edit.pasteText', label: 'Unformatted text' },
       ];
       const r = await openDialog({ title: 'Paste Special', fields: [{ key: 'as', label: 'As', type: 'radio', options: opts, value: opts[0].value }] });

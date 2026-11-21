@@ -33,7 +33,7 @@ export function isPristine(tab: PubTab): boolean {
 
 const toBlob = (data: Uint8Array | string, mime: string) => new Blob([data as BlobPart], { type: mime });
 
-/** Formats whose file QuillPress keeps writing back to (everything else is saved as .qpp). */
+/** Formats whose file Anne's Press keeps writing back to (everything else is saved as .qpp). */
 const KEEPS_FILE = ['qpp', 'qppe', 'sla', 'json'];
 
 export async function openBuffer(app: App, data: ArrayBuffer, name: string, uri: string | null, opts: { repair?: boolean; key?: string; password?: string } = {}): Promise<PubTab | null> {
@@ -105,7 +105,7 @@ export async function saveTab(app: App, tab: PubTab, opts: { as?: boolean; forma
   let fmt = formatById(format);
   if (!fmt?.canExport) { format = 'qpp'; fmt = formatById('qpp')!; }
   if (!opts.copy && format === 'sla') {
-    const c = await choiceDialog('Keep Scribus Format?', 'Scribus documents keep pages, frames, styles and pictures, but not every QuillPress setting (effects, baseline grid, comments, variables).', ['Save as QuillPress Publication (.qpp)', 'Keep Scribus (.sla)']);
+    const c = await choiceDialog('Keep Scribus Format?', 'Scribus documents keep pages, frames, styles and pictures, but not every Anne\'s Press setting (effects, baseline grid, comments, variables).', ['Save as Anne\'s Press Publication (.qpp)', 'Keep Scribus (.sla)']);
     if (c < 0) return false;
     if (c === 0) { format = 'qpp'; fmt = formatById('qpp')!; opts = { ...opts, as: true }; }
   }
@@ -144,7 +144,7 @@ function markSaved(app: App, tab: PubTab, version: number) {
   tab.saved = Date.now();
   if (tab.pub.version === version) { tab.dirty = false; kvDel('draft:' + tab.id); } else app.scheduleAutosave();
   app.ui.tabsChanged();
-  document.title = `${tab.displayName}${tab.dirty ? ' •' : ''} – QuillPress`;
+  document.title = `${tab.displayName}${tab.dirty ? ' •' : ''} – Anne\'s Press`;
 }
 
 /** Saves bytes produced by an export with the system save dialog. */
@@ -444,7 +444,7 @@ def([
       const { unb64 } = await import('../io/xml');
       for (const [id, m] of Object.entries(pub.media)) { const ext = (m.mime.split('/')[1] || 'bin').replace('jpeg', 'jpg').replace('svg+xml', 'svg'); links.file(m.name && /\.[a-z0-9]+$/i.test(m.name) ? m.name : `${id}.${ext}`, unb64(m.b64)); }
       const { fontsUsed } = await import('../model/styles');
-      const report = [`Package of "${app.tab.title}" made by QuillPress on ${new Date().toLocaleString()}`, '', `Pages: ${pub.pages.length} (${pub.size.w} × ${pub.size.h} pt${pub.data.facing ? ', facing' : ''}, bleed ${pub.data.bleed} pt)`, `Fonts: ${fontsUsed(pub.data).join(', ') || '(defaults)'}`, `Pictures: ${Object.keys(pub.media).length}`, '', 'Files:', `  ${b}.qpp — the publication (open with QuillPress)`, `  ${b}.sla — Scribus document`, `  ${b}.pdf — PDF for printing`, `  ${b}.html — web page`, '  Links/ — every picture'].join('\n');
+      const report = [`Package of "${app.tab.title}" made by Anne\'s Press on ${new Date().toLocaleString()}`, '', `Pages: ${pub.pages.length} (${pub.size.w} × ${pub.size.h} pt${pub.data.facing ? ', facing' : ''}, bleed ${pub.data.bleed} pt)`, `Fonts: ${fontsUsed(pub.data).join(', ') || '(defaults)'}`, `Pictures: ${Object.keys(pub.media).length}`, '', 'Files:', `  ${b}.qpp — the publication (open with Anne\'s Press)`, `  ${b}.sla — Scribus document`, `  ${b}.pdf — PDF for printing`, `  ${b}.html — web page`, '  Links/ — every picture'].join('\n');
       zip.file('Package report.txt', report);
       await saveBytes(await zip.generateAsync({ type: 'uint8array' }), `${b} package.zip`, 'application/zip');
     },
@@ -476,7 +476,7 @@ def([
   },
   {
     id: 'file.email', label: 'Email', icon: 'attach_email', tab: 'Backstage', group: 'Share', noRecord: true,
-    tip: 'Send the publication as an attachment (uses the system share sheet, which includes your mail app and QuillPost when installed)',
+    tip: 'Send the publication as an attachment (uses the system share sheet, which includes your mail app and Anne\'s Post when installed)',
     run: async (app) => { const out = await exportPublication(app.pub, 'qpp'); await shareFile(toBlob(out.data, out.mime), `${baseName(app)}.qpp`, app.tab.title); },
   },
   {
@@ -572,7 +572,7 @@ def([
       toast('Publication inspected and cleaned');
     },
   },
-  { id: 'file.encrypt', label: 'Encrypt with Password…', icon: 'enhanced_encryption', tab: 'Backstage', group: 'Info', noRecord: true, tip: 'Save an AES-256 encrypted QuillPress copy (.qppe)', run: (app) => saveTab(app, app.tab, { copy: true, format: 'qppe' }) },
+  { id: 'file.encrypt', label: 'Encrypt with Password…', icon: 'enhanced_encryption', tab: 'Backstage', group: 'Info', noRecord: true, tip: 'Save an AES-256 encrypted Anne\'s Press copy (.qppe)', run: (app) => saveTab(app, app.tab, { copy: true, format: 'qppe' }) },
   {
     id: 'file.markFinal', label: 'Mark as Final', icon: 'verified', tab: 'Backstage', group: 'Info', kind: 'toggle', noRecord: true,
     tip: 'Make the publication read-only so readers know it is finished',
@@ -614,7 +614,7 @@ def([
     run: async (app) => {
       const p = app.prefs;
       const u = UNITS[p.unit];
-      const r = await openDialog({ title: 'QuillPress Options', wide: true, fields: [
+      const r = await openDialog({ title: 'Anne\'s Press Options', wide: true, fields: [
         { key: 'h1', type: 'heading', label: 'General' },
         { key: 'author', label: 'User name', type: 'text', value: p.author, half: true },
         { key: 'initials', label: 'Initials', type: 'text', value: p.initials, half: true },
@@ -702,7 +702,7 @@ def([
   {
     id: 'file.exportSettings', label: 'Export / Import Settings…', icon: 'import_export', tab: 'Backstage', group: 'Options', noRecord: true,
     run: async (app) => {
-      const r = await openDialog({ title: 'Settings Transfer', help: 'Copy this text to back up your Quick Access Bar, custom tabs, shortcuts, macros, AutoCorrect and preferences. Paste settings text here and choose Import to restore. The format is shared with the other Quill apps; settings that do not apply to QuillPress are ignored.', fields: [{ key: 'json', label: 'Settings (JSON)', type: 'textarea', rows: 12, value: JSON.stringify({ ...app.prefs, recent: [] }, null, 1) }], ok: 'Import', buttons: [{ label: 'Copy', onClick: (x) => { navigator.clipboard?.writeText(x.json); toast('Copied'); } }] });
+      const r = await openDialog({ title: 'Settings Transfer', help: 'Copy this text to back up your Quick Access Bar, custom tabs, shortcuts, macros, AutoCorrect and preferences. Paste settings text here and choose Import to restore. The format is shared with the other Anne\'s Office apps; settings that do not apply to Anne\'s Press are ignored.', fields: [{ key: 'json', label: 'Settings (JSON)', type: 'textarea', rows: 12, value: JSON.stringify({ ...app.prefs, recent: [] }, null, 1) }], ok: 'Import', buttons: [{ label: 'Copy', onClick: (x) => { navigator.clipboard?.writeText(x.json); toast('Copied'); } }] });
       if (!r) return;
       let p: unknown;
       try { p = JSON.parse(r.json); } catch { /* reported below */ }

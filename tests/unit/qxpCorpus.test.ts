@@ -41,7 +41,7 @@ describe.skipIf(!has)('QuarkXPress corpus', () => {
     const big = frames.find((f) => storyText(r, f).startsWith('Lorem ipsum dolor sit amet'))!;
     expect(big).toBeTruthy();
     // QuarkXPress draws frames inside the box: the 1 pt frame takes half a point off each side of the
-    // outline QuillPress strokes, and the text is inset by the other half on top of the box inset.
+    // outline Anne's Press strokes, and the text is inset by the other half on top of the box inset.
     expect(big.w).toBeCloseTo(348.88, 1);
     expect(big.insets).toEqual([1.5, 1.5, 1.5, 1.5]);
     expect(big.line?.width).toBe(1);

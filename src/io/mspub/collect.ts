@@ -1,5 +1,5 @@
 /**
- * Turns the intermediate layout document of a Publisher file into a QuillPress publication:
+ * Turns the intermediate layout document of a Publisher file into an Anne's Press publication:
  * pages and master pages, text frames with their stories and chains, picture frames with the
  * embedded pictures, shapes, lines, groups and tables, with the palette as swatches.
  */
@@ -12,7 +12,7 @@ import type { LDoc, LShape, LPage } from './shapes';
 import { storyParagraphs, hex, type TextEnv } from './text';
 import type { QPara } from './quill';
 
-/** Office Art shape type numbers → QuillPress preset geometry names. */
+/** Office Art shape type numbers → Anne's Press preset geometry names. */
 const PRESETS: Record<number, string> = {
   1: 'rect', 2: 'roundRect', 3: 'ellipse', 4: 'diamond', 5: 'triangle', 6: 'rtTriangle', 7: 'parallelogram', 8: 'trapezoid', 9: 'hexagon', 10: 'octagon', 11: 'plus', 12: 'star5', 13: 'rightArrow', 15: 'homePlate', 16: 'cube', 17: 'wedgeRectCallout', 19: 'arc', 21: 'plaque', 22: 'can', 23: 'donut', 24: 'rect',
   32: 'line', 33: 'bentConnector3', 34: 'bentConnector3', 35: 'bentConnector3', 36: 'bentConnector3', 37: 'curvedConnector3', 38: 'curvedConnector3', 39: 'curvedConnector3', 40: 'curvedConnector3', 41: 'borderCallout1', 42: 'borderCallout1', 43: 'borderCallout1',
@@ -278,10 +278,10 @@ export function collectPub(doc: LDoc, name: string): CollectResult {
   w.unshift(`Microsoft Publisher ${doc.version}: ${P.pages.length} page${P.pages.length === 1 ? '' : 's'}${masters.length ? ` and ${masters.length} master page${masters.length === 1 ? '' : 's'}` : ''} with ${items} object${items === 1 ? '' : 's'} and ${P.stories.length} stor${P.stories.length === 1 ? 'y' : 'ies'} were read with their layout.`);
   if (env.counts.metafiles) w.push(`${env.counts.metafiles} picture${env.counts.metafiles === 1 ? ' is a metafile that could not be converted (an empty or damaged WMF/EMF, or a Macintosh PICT) and was' : 's are metafiles that could not be converted (empty or damaged WMF/EMF, or Macintosh PICT) and were'} left as empty frames; place them again from another format.`);
   if (env.counts.convertedMetafiles) w.push(`${env.counts.convertedMetafiles} Windows metafile picture${env.counts.convertedMetafiles === 1 ? ' was' : 's were'} converted to SVG drawings; text in them uses the fonts installed on this device.`);
-  if (env.counts.approxShapes) w.push(`${env.counts.approxShapes} shape${env.counts.approxShapes === 1 ? ' was' : 's were'} drawn with the closest preset QuillPress has (curved arrows, callouts and flowchart symbols are approximate).`);
+  if (env.counts.approxShapes) w.push(`${env.counts.approxShapes} shape${env.counts.approxShapes === 1 ? ' was' : 's were'} drawn with the closest preset Anne\'s Press has (curved arrows, callouts and flowchart symbols are approximate).`);
   if (doc.counts.wordArt) w.push(`${doc.counts.wordArt} WordArt object${doc.counts.wordArt === 1 ? ' was' : 's were'} placed as plain text in its colour; the warp, outline and shadow effects are not reproduced.`);
   if (env.counts.tableBorders) w.push(`${env.counts.tableBorders} table${env.counts.tableBorders === 1 ? '' : 's'} from Publisher 2000 got a plain hairline grid; its cell borders and fills are not read.`);
-  if (env.counts.unknownShapes) w.push(`${env.counts.unknownShapes} shape${env.counts.unknownShapes === 1 ? '' : 's'} of a kind QuillPress has no preset for were placed as rectangles.`);
+  if (env.counts.unknownShapes) w.push(`${env.counts.unknownShapes} shape${env.counts.unknownShapes === 1 ? '' : 's'} of a kind Anne\'s Press has no preset for were placed as rectangles.`);
   if (doc.counts.borderArt) w.push(`Decorative borders (Border Art) on ${doc.counts.borderArt} object${doc.counts.borderArt === 1 ? '' : 's'} were not read; plain outlines were kept.`);
   if (doc.counts.calcGeometry) w.push(`${doc.counts.calcGeometry} custom shape${doc.counts.calcGeometry === 1 ? ' uses' : 's use'} computed geometry points; the outline is approximate.`);
   if (doc.embeddedFonts) w.push(`${doc.embeddedFonts} embedded font${doc.embeddedFonts === 1 ? '' : 's'} (EOT) were not installed; the font names were kept.`);

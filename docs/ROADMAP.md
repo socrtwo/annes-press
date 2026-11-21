@@ -51,7 +51,7 @@
 
 ## M6 — Collaboration and suite
 
-- [ ] Track changes; visual compare; shared comments; QuillPen documents with mapped styles; charts from QuillGrid; PDF hand-off to QuillFolio with form fields kept.
+- [ ] Track changes; visual compare; shared comments; Anne's Pen documents with mapped styles; charts from Anne's Grid; PDF hand-off to Anne's Folio with form fields kept.
 
 ## Always
 

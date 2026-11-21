@@ -1,5 +1,5 @@
 /**
- * Native QuillPress formats.
+ * Native Anne's Press formats.
  *   .qpp   ZIP package: `mimetype` (stored first), `publication.json` (the model), `media/<id>` binaries,
  *          and, when the Fonts dialog's "Package fonts" option is on, the user's fonts the publication
  *          uses under `fonts/` with an index in `fonts.json` (fonts whose license forbids embedding are
@@ -71,7 +71,7 @@ export async function packagedFonts(zip: JSZip): Promise<PackagedFontEntry[]> {
 export async function importQpp(data: Uint8Array, opts: { fonts?: boolean } = {}): Promise<Pub> {
   const zip = await JSZip.loadAsync(data);
   const f = zip.file('publication.json');
-  if (!f) throw new Error('This QuillPress package has no publication.json.');
+  if (!f) throw new Error('This Anne\'s Press package has no publication.json.');
   const j = JSON.parse(await f.async('string'));
   const media: Record<string, any> = {};
   for (const [id, info] of Object.entries<any>(j.mediaIndex || {})) {

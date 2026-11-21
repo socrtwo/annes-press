@@ -1,5 +1,5 @@
 /**
- * Text layout. QuillPress breaks lines itself (rather than leaving it to the browser) so the editing
+ * Text layout. Anne's Press breaks lines itself (rather than leaving it to the browser) so the editing
  * view, thumbnails, print, PDF, SVG and PNG export all break lines in the same places, and so that a
  * story can flow through a chain of frames and columns. Widths are measured with a canvas; where no
  * canvas exists (tests) an average-width estimate is used.

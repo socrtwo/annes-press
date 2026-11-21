@@ -104,7 +104,7 @@ export function renderBackstage(app: App, root: HTMLElement, page: string): void
       grid.appendChild(card('HTML', 'A responsive web page per publication page', 'html', () => app.exec('file.export.html')));
       grid.appendChild(card('Text', 'All stories as plain text or Markdown', 'notes', () => app.exec('file.export.text')));
       grid.appendChild(card('Package', 'A ZIP with .qpp, PDF, HTML and the pictures', 'inventory_2', () => app.exec('file.package')));
-      grid.appendChild(card('Encrypted QuillPress (.qppe)', 'AES-256 password protected', 'enhanced_encryption', () => app.exec('file.encrypt')));
+      grid.appendChild(card('Encrypted Anne\'s Press (.qppe)', 'AES-256 password protected', 'enhanced_encryption', () => app.exec('file.encrypt')));
       grid.appendChild(card('Template', 'Reuse this design as a starting point', 'bookmark_add', () => app.exec('file.saveTemplate')));
       body.appendChild(grid);
       break;

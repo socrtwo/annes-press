@@ -1,13 +1,13 @@
 # Clean-room, trademark and licensing notes
 
-This file records how QuillPress provides a complete page layout command set while avoiding other vendors' trademarks and copyrights. It follows the practice of the sister apps.
+This file records how Anne's Press provides a complete page layout command set while avoiding other vendors' trademarks and copyrights. It follows the practice of the sister apps.
 
 ## What is reproduced, and why it is safe
 
 - **Functionality and command names.** Page layout operations (New Page, Master Page, Link Frames, Autoflow, Text Wrap, Step and Repeat, Preflight, Package) are functional ideas, and their names are ordinary English words that every program in the field uses. Functionality is not protected by copyright; descriptive names are not trademarks.
-- **Tab and group organization.** Grouping commands under tabs such as Home, Insert, Page Design, Text, Arrange, Review and View is a common, functional arrangement. QuillPress's grouping, ordering, labels, tooltips and icons are its own.
+- **Tab and group organization.** Grouping commands under tabs such as Home, Insert, Page Design, Text, Arrange, Review and View is a common, functional arrangement. Anne's Press's grouping, ordering, labels, tooltips and icons are its own.
 - **Keyboard shortcuts.** Long-standing shortcuts (Ctrl+S, Ctrl+Z, F7 for spelling, Ctrl+Shift+P for a new page) are functional conventions users rely on; all of them can be rebound.
-- **File formats.** Scribus (.sla) is an open format developed by an open-source project; QuillPress reads and writes it from the public XML and the Scribus documentation, with original code. The native format is QuillPress's own. PDF is ISO 32000; the writer is original. Planned readers for other vendors' formats will work only from published specifications ([MS-PUB], IDML) and original observation.
+- **File formats.** Scribus (.sla) is an open format developed by an open-source project; Anne's Press reads and writes it from the public XML and the Scribus documentation, with original code. The native format is Anne's Press's own. PDF is ISO 32000; the writer is original. Planned readers for other vendors' formats will work only from published specifications ([MS-PUB], IDML) and original observation.
 - **Typographic conventions.** Justification, hyphenation, drop caps, paragraph rules, baseline grids and copy fitting are centuries-old craft; their implementations here are original.
 
 ## What is deliberately not reproduced
@@ -15,7 +15,7 @@ This file records how QuillPress provides a complete page layout command set whi
 - No vendor logos, icons, splash screens, color schemes or trade dress. Command icons are Google's Material Symbols (Apache 2.0). The app icon and visual design are original.
 - No vendor product names in the app's own name or interface. Trademarked or brand-specific feature names are replaced with generic terms:
 
-| Vendor term | QuillPress term |
+| Vendor term | Anne's Press term |
 |---|---|
 | InDesign, QuarkXPress, Publisher, PageMaker (as feature names) | appear only in file-type lists and in this file |
 | Collect for Output / Package | Package Publication (`file.package`) |
@@ -39,15 +39,15 @@ Product names appear in the documentation and in file-type lists only to identif
 - Microsoft, Microsoft Publisher, Word and Windows are trademarks of Microsoft Corporation.
 - Affinity Publisher is a trademark of Serif (Europe) Ltd (Canva).
 - Ventura Publisher was a product of Ventura Software, then Xerox and Corel; Corel is a trademark of Corel Corporation.
-- Scribus is the name of an open-source project (GPL); QuillPress contains none of its code.
+- Scribus is the name of an open-source project (GPL); Anne's Press contains none of its code.
 - Apple, macOS, iOS and iPadOS are trademarks of Apple Inc.; Android and Chrome are trademarks of Google LLC; Linux is a trademark of Linus Torvalds; Raspberry Pi is a trademark of Raspberry Pi Ltd.
 - AI provider names (OpenAI, Anthropic, Google Gemini, Mistral, Groq, OpenRouter, Ollama, LM Studio and others) identify services the app can connect to.
 
-QuillPress is not affiliated with, endorsed by, or sponsored by any of them.
+Anne's Press is not affiliated with, endorsed by, or sponsored by any of them.
 
 ## Format references
 
-The readers for Microsoft Publisher (.pub), QuarkXPress (.qxp, .qxd, .qxt) and PageMaker (.pmd, .p65, .pm6, .pmt) were written from the public descriptions of those formats embodied in the Document Liberation Project's libmspub, libqxp and libpagemaker, together with the Microsoft Open Specifications for the compound file container ([MS-CFB]) and the Office Art drawing records ([MS-ODRAW]). Those libraries are licensed under the Mozilla Public License 2.0, which this suite does not accept for shipped code, so they served only as a description of the record layouts, constants and parsing order; QuillPress's readers are original TypeScript and ship no code from them. InDesign binary (.indd) files have no such description, so they open with their text and pictures only; the IDML package format is Adobe's documented interchange format and is both read and written.
+The readers for Microsoft Publisher (.pub), QuarkXPress (.qxp, .qxd, .qxt) and PageMaker (.pmd, .p65, .pm6, .pmt) were written from the public descriptions of those formats embodied in the Document Liberation Project's libmspub, libqxp and libpagemaker, together with the Microsoft Open Specifications for the compound file container ([MS-CFB]) and the Office Art drawing records ([MS-ODRAW]). Those libraries are licensed under the Mozilla Public License 2.0, which this suite does not accept for shipped code, so they served only as a description of the record layouts, constants and parsing order; Anne's Press's readers are original TypeScript and ship no code from them. InDesign binary (.indd) files have no such description, so they open with their text and pictures only; the IDML package format is Adobe's documented interchange format and is both read and written.
 
 ## Third-party components
 
@@ -65,7 +65,7 @@ The dictionaries the **Spelling Dictionaries** wizard downloads are listed with 
 
 ## Online services
 
-QuillPress has no server. The only network use is what you start: AI providers you configure (see [AI.md](AI.md)), dictionary downloads from the catalog's sources, the Picture from Web Address command, and the Look Up command, which opens a dictionary web site in your browser.
+Anne's Press has no server. The only network use is what you start: AI providers you configure (see [AI.md](AI.md)), dictionary downloads from the catalog's sources, the Picture from Web Address command, and the Look Up command, which opens a dictionary web site in your browser.
 
 ## License
 

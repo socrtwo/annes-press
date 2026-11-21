@@ -42,7 +42,7 @@ export async function ensureAiReady(app: App, reason = 'This command needs an AI
   const ids = aiRecipients().filter((id) => cloudId(id) && !aiSettings().privacyAck.includes(id));
   if (!ids.length) return true;
   const free = ids.some((id) => providerById(id)?.free === 'free');
-  const ok = await confirmDialog('Sending Text to an AI Service', `AI commands send only the publication text they need directly from this device to ${names(ids)}. QuillPress has no server and keeps no copy. The service's terms and privacy policy apply${free ? ', and free tiers may use what you send to improve their models' : ''}. For confidential publications, use the on-device model. Continue?`, 'Continue', 'Cancel');
+  const ok = await confirmDialog('Sending Text to an AI Service', `AI commands send only the publication text they need directly from this device to ${names(ids)}. Anne\'s Press has no server and keeps no copy. The service's terms and privacy policy apply${free ? ', and free tiers may use what you send to improve their models' : ''}. For confidential publications, use the on-device model. Continue?`, 'Continue', 'Cancel');
   if (ok) saveAiSettings((x) => { for (const id of ids) if (!x.privacyAck.includes(id)) x.privacyAck.push(id); });
   return ok;
 }
@@ -265,7 +265,7 @@ def([
     run: async () => {
       const p = providerById(aiSettings().active || '');
       await openDialog({ title: 'AI & Privacy', ok: 'Close', cancel: false, fields: [{ key: 'i', type: 'info', html: [
-        '<p><b>QuillPress has no server.</b> AI requests go directly from this device to the provider you choose, using your own key. Nothing is sent until you run an AI command.</p>',
+        '<p><b>Anne\'s Press has no server.</b> AI requests go directly from this device to the provider you choose, using your own key. Nothing is sent until you run an AI command.</p>',
         `<p><b>Active provider:</b> ${p ? esc(p.name) : 'none'}${p && (p.kind === 'local' || p.kind === 'builtin') ? ' — runs on this device; your publication does not leave it.' : p ? ' — the text a command needs (the selection, the story, or the publication\'s text for whole-publication commands) is sent to this service; its terms apply.' : ''}</p>`,
         activeEnsemble() ? `<p><b>Several AIs are on.</b> Each AI command sends the same text to every one of these services: ${esc(names(aiRecipients()))}.</p>` : '',
         '<p><b>Pictures</b> are sent only by Generate Alt Text and Write Caption, and only the selected picture.</p>',
@@ -292,7 +292,7 @@ def([
   // Create
   {
     id: 'ai.draftPublication', label: 'Draft Publication', icon: 'auto_awesome_motion', tab: 'AI', group: 'Create', edits: true, popular: true,
-    tip: 'Describe the publication; the AI writes the articles, then QuillPress lays them out on pages with headlines, decks, columns, sidebars and pull quotes',
+    tip: 'Describe the publication; the AI writes the articles, then Anne\'s Press lays them out on pages with headlines, decks, columns, sidebars and pull quotes',
     run: async (app) => {
       const r = await openDialog({ title: 'Draft Publication', fields: [
         { key: 'brief', label: 'What is it about? (topic, purpose, key points)', type: 'textarea', rows: 4, value: '' },

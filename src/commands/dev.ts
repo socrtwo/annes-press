@@ -80,7 +80,7 @@ def([
       const r = await openDialog({ title: m ? `Edit Macro: ${m.name}` : 'New Macro', wide: true, fields: [
         { key: 'name', label: 'Name', type: 'text', value: m?.name || `Macro${ms.length + 1}` },
         { key: 'desc', label: 'Description', type: 'text', value: m?.description || '' },
-        { key: 'steps', label: 'Steps', type: 'textarea', rows: 14, value: text, help: 'Find command ids in Help ▸ Command Reference or the Customize dialogs. Macros run QuillPress commands only; they cannot reach files, the network or other apps.' },
+        { key: 'steps', label: 'Steps', type: 'textarea', rows: 14, value: text, help: 'Find command ids in Help ▸ Command Reference or the Customize dialogs. Macros run Anne\'s Press commands only; they cannot reach files, the network or other apps.' },
       ], validate: (v) => {
         for (const [i, line] of String(v.steps).split('\n').entries()) {
           const t = line.trim(); if (!t || t.startsWith('#')) continue;
@@ -99,7 +99,7 @@ def([
   },
   {
     id: 'dev.macroSecurity', label: 'Macro Security', icon: 'admin_panel_settings', tab: 'Developer', group: 'Code', noRecord: true, edits: false,
-    run: async () => { await openDialog({ title: 'Macro Security', ok: 'Close', cancel: false, fields: [{ key: 'i', type: 'info', html: '<p><b>QuillPress macros are lists of QuillPress commands.</b> They can do only what you could do with the ribbon: format, insert, change pages. They cannot run code, read or write files on their own, or use the network.</p><p>Publications never carry executable code: a .qpp file holds JSON and pictures only, and scripts inside imported files are ignored.</p>' }] }); },
+    run: async () => { await openDialog({ title: 'Macro Security', ok: 'Close', cancel: false, fields: [{ key: 'i', type: 'info', html: '<p><b>Anne\'s Press macros are lists of Anne\'s Press commands.</b> They can do only what you could do with the ribbon: format, insert, change pages. They cannot run code, read or write files on their own, or use the network.</p><p>Publications never carry executable code: a .qpp file holds JSON and pictures only, and scripts inside imported files are ignored.</p>' }] }); },
   },
   {
     id: 'dev.tags', label: 'Object Tags', icon: 'sell', tab: 'Developer', group: 'Data', edits: true, isEnabled: (app) => app.selected.length === 1,
@@ -120,12 +120,12 @@ def([
   },
   {
     id: 'dev.importJson', label: 'Import Publication JSON', icon: 'upload', tab: 'Developer', group: 'Data', noRecord: true, edits: false,
-    tip: 'Open a QuillPress publication JSON file in a new tab',
+    tip: 'Open an Anne\'s Press publication JSON file in a new tab',
     run: async (app) => {
       const f = (await pickFile('.json,application/json'))[0];
       if (!f) return;
       try { const d = Pub.fromJSON(JSON.parse(await f.text())); app.createTab(d, { title: f.name.replace(/\.json$/i, ''), fileName: f.name, format: 'json' }); }
-      catch (e: any) { toast(`Not a QuillPress publication: ${e?.message || e}`); }
+      catch (e: any) { toast(`Not an Anne\'s Press publication: ${e?.message || e}`); }
     },
   },
   {

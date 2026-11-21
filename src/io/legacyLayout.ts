@@ -216,7 +216,7 @@ export async function harvestLayout(data: Uint8Array, name: string, kind: Exclud
   const label = LEGACY_LABELS[kind];
   const pub = await buildPublication(name, paras, pics, warnings);
   if (!paras.length && !pics.length) throw new Error(`No readable text or pictures were found in this ${label}.${reason ? ` ${reason}` : ''}`);
-  const why = kind === 'indd' ? 'QuillPress has no reader for this format\'s layout (it is not publicly documented).' : reason || 'The layout could not be read.';
+  const why = kind === 'indd' ? 'Anne\'s Press has no reader for this format\'s layout (it is not publicly documented).' : reason || 'The layout could not be read.';
   const advice = kind === 'indd' ? 'an IDML export from InDesign' : kind === 'qxp' ? 'an XPress Tags export from QuarkXPress, or a 3.1–4.1 copy of the file' : 'a PageMaker 6–7 copy of the file';
   warnings.unshift(`${label}: ${why} ${paras.length ? `The text (${paras.reduce((a, p) => a + p.runs[0].text.split(/\s+/).length, 0)} words) was recovered and flowed into frames` : 'No text was found'}; frames, styles and page geometry were not. Save the result as .qpp or ask for ${advice}.`);
   return { pub, warnings, textOnly: true };

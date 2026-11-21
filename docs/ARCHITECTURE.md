@@ -1,6 +1,6 @@
 # Architecture
 
-QuillPress is a TypeScript web application built with **Vite** and tested with **vitest** and **Playwright**. The Android and iOS releases package it with **Capacitor 8**, the Windows, macOS and Linux releases with **Electron**, and the same build is a PWA. It shares its application shell with the other Quill apps.
+Anne's Press is a TypeScript web application built with **Vite** and tested with **vitest** and **Playwright**. The Android and iOS releases package it with **Capacitor 8**, the Windows, macOS and Linux releases with **Electron**, and the same build is a PWA. It shares its application shell with the other Anne's Office apps.
 
 ## Source layout
 
@@ -56,7 +56,7 @@ src/
     html.ts               web page export; text and Markdown of the stories
     print.ts              print sheets, preview dialog, crop marks, spreads
   proof/                  spelling: dictionaries (downloads), proofing (targets, worker protocol), worker
-  ai/                     providers, client, store, ensemble (shared); press.ts (QuillPress prompts)
+  ai/                     providers, client, store, ensemble (shared); press.ts (Anne's Press prompts)
   ui/                     shell (ribbon, QAT, tabs, status bar, context menus), dialogs, panes, backstage,
                           customize dialogs, AI and dictionary wizards, recovery report, fonts dialog
   platform/native.ts      files, sharing, printing, clipboard, sibling apps (browser, Capacitor, Electron)
@@ -90,7 +90,7 @@ Every feature is a `def()` in `src/commands/*.ts` with an id (`area.name`), labe
 
 ## Platforms
 
-`platform/native.ts` abstracts the file system (File System Access API, Capacitor plugin `QuillNative`, Electron bridge), sharing, printing, the clipboard, secure storage and the sibling Quill apps. The Android project (`android/`), the iOS project (`ios/`) and the Electron main process (`electron/`) are committed; `scripts/` holds icon generation, notices and the catalog. See [BUILD.md](BUILD.md), [ANDROID.md](ANDROID.md) and [INSTALL.md](INSTALL.md).
+`platform/native.ts` abstracts the file system (File System Access API, Capacitor plugin `QuillNative`, Electron bridge), sharing, printing, the clipboard, secure storage and the sibling Anne's Office apps. The Android project (`android/`), the iOS project (`ios/`) and the Electron main process (`electron/`) are committed; `scripts/` holds icon generation, notices and the catalog. See [BUILD.md](BUILD.md), [ANDROID.md](ANDROID.md) and [INSTALL.md](INSTALL.md).
 
 ## Tests
 

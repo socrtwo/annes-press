@@ -132,7 +132,7 @@ export async function openFontsUsedReport(app: App): Promise<void> {
   const rows = names.map((n) => {
     const a = fontAvailability(n);
     const faces = userFonts().filter((f) => f.family.toLowerCase() === n.toLowerCase());
-    const how = a === 'bundled' ? 'bundled with QuillPress; embedded in PDF' : a === 'missing' ? 'not available: shows only where the device has it; PDF export substitutes a standard font'
+    const how = a === 'bundled' ? 'bundled with Anne\'s Press; embedded in PDF' : a === 'missing' ? 'not available: shows only where the device has it; PDF export substitutes a standard font'
       : `${a === 'packaged' ? 'packaged with this publication' : 'your font'}: ${faces.map((f) => `${f.subfamily} (${f.format.toUpperCase()}${f.embeddable ? '' : ', not embedded'})`).join(', ')}`;
     return `<li style="font-family:'${esc(n)}'">${esc(n)} <span class="ql-help">— ${esc(how)}</span></li>`;
   });

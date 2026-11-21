@@ -1,6 +1,6 @@
 /**
  * Conversion of Quill stories (paragraphs of spans with Publisher's character and paragraph
- * properties) into QuillPress paragraphs and runs, and the resolution of Publisher color references.
+ * properties) into Anne's Press paragraphs and runs, and the resolution of Publisher color references.
  */
 import type { Paragraph, Run, NumScheme, Color } from '../../model/types';
 import type { QPara, CharStyle, ParaStyle, QuillInfo } from './quill';
@@ -115,7 +115,7 @@ function runsOf(text: string, props: Partial<Run>, env: TextEnv): Run[] {
   return out;
 }
 
-/** Converts a Quill story into QuillPress paragraphs. */
+/** Converts a Quill story into Anne's Press paragraphs. */
 export function storyParagraphs(paras: QPara[], env: TextEnv, style = 'Body'): Paragraph[] {
   const out: Paragraph[] = [];
   for (const qp of paras) {

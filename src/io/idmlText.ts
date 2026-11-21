@@ -389,7 +389,7 @@ function readTable(ctx: Ctx, t: Element): void {
   }
 }
 
-/** Reads a Story element into a QuillPress story (registered on the publication). */
+/** Reads a Story element into an Anne's Press story (registered on the publication). */
 export function readStory(pub: Pub, storyEl: Element, colors: ColorTable, styles: StyleTable): StoryRead {
   const ctx: Ctx = { pub, colors, styles, paras: [], cur: { style: 'Body', runs: [] }, paraStyle: 'Body', paraOverrides: {}, run: {}, cstyle: '', anchored: [], notes: 0, tables: 0, footnotes: [], inFootnote: false, fresh: true };
   walkNodes(ctx, storyEl);

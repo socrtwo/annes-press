@@ -2,7 +2,7 @@
   "name": "quillpress",
   "version": "0.1.0",
   "private": true,
-  "description": "QuillPress: an original open-source desktop publishing and page layout app with a complete, customizable command library.",
+  "description": "Anne's Press: an original open-source desktop publishing and page layout app with a complete, customizable command library.",
   "license": "MIT",
   "type": "module",
   "scripts": {

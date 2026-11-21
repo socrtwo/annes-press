@@ -1,4 +1,4 @@
-// QuillPress desktop app (Windows, macOS, Linux, Raspberry Pi OS): Electron main process.
+// Anne's Press desktop app (Windows, macOS, Linux, Raspberry Pi OS): Electron main process.
 //
 // The web build (dist/) is served from the privileged app:// scheme so module workers, fetch and
 // IndexedDB behave as on the web. The renderer is sandboxed with context isolation and no Node;
@@ -8,6 +8,9 @@
 'use strict';
 const { app, BrowserWindow, protocol, net, ipcMain, dialog, shell, clipboard, safeStorage, powerSaveBlocker, Menu, screen } = require('electron');
 const path = require('node:path');
+// The data folder keeps the app's former name (QuillPress) so settings, drafts and keys stay where earlier versions put them. // rename:keep
+app.setPath('userData', path.join(app.getPath('appData'), 'QuillPress')); // rename:keep
+app.setPath('sessionData', app.getPath('userData')); // rename:keep
 const fs = require('node:fs');
 
 const http = require('node:http');
@@ -19,7 +22,7 @@ const ORIGIN = `${SCHEME}://quillpress`;
 const OPENABLE = ['qpp', 'qppe', 'sla', 'json', 'svg', 'md', 'markdown', 'txt', 'rtf', 'docx', 'html', 'htm', 'png', 'jpg', 'jpeg', 'gif', 'webp', 'bmp', 'tif', 'tiff',
   // other page layout programs' files (read by content; see docs/FORMATS.md)
   'idml', 'indd', 'indt', 'pub', 'qxp', 'qxd', 'qxt', 'pmd', 'p65', 'pm6', 'pmt', 'mif', 'xtg'];
-/** Documents, slides, sheets and mail the app can place or hand to a sibling Quill app (never programs or scripts). */
+/** Documents, slides, sheets and mail the app can place or hand to a sibling Anne's Office app (never programs or scripts). */
 const DOCUMENTS = ['docx', 'docm', 'dotx', 'doc', 'odt', 'fodt', 'rtf', 'pdf', 'html', 'htm', 'pptx', 'odp', 'xlsx', 'ods', 'csv', 'eml', 'qsp', 'qpd', 'qgs', 'qlw', 'qfo'];
 
 protocol.registerSchemesAsPrivileged([{ scheme: SCHEME, privileges: { standard: true, secure: true, supportFetchAPI: true, corsEnabled: true, stream: true } }]);
@@ -51,7 +54,7 @@ function grant(p) {
 function grantedPath(uri) {
   if (typeof uri !== 'string' || !uri.startsWith('file:')) throw new Error('Not a file address');
   const p = path.resolve(fileURLToPath(uri));
-  if (!grants.has(p)) throw new Error('QuillPress has no permission for this file; open it again.');
+  if (!grants.has(p)) throw new Error('Anne\'s Press has no permission for this file; open it again.');
   return p;
 }
 const MIME = {
@@ -189,7 +192,7 @@ function registerIpc() {
   });
   handle('stopLoopback', async () => stopLoop());
   handle('openExternal', async ({ url }) => { if (safeUrl(url)) await shell.openExternal(url); });
-  // Hand a document to the program registered for its type (QuillPen, QuillGrid, QuillPost, QuillStage, QuillLoom or QuillFolio when installed).
+  // Hand a document to the program registered for its type (Anne's Pen, Anne's Grid, Anne's Post, Anne's Stage, Anne's Loom or Anne's Folio when installed).
   handle('openWith', async ({ name, data }) => {
     const base = path.basename(String(name || 'document')).replace(/[\\/:*?"<>|]/g, '_');
     const ext = path.extname(base).slice(1).toLowerCase();
@@ -259,7 +262,7 @@ function createWindow() {
     height: 860,
     minWidth: 360,
     minHeight: 480,
-    title: 'QuillPress',
+    title: 'Anne\'s Press',
     backgroundColor: '#ffffff',
     autoHideMenuBar: process.platform !== 'darwin',
     icon: path.join(__dirname, 'icon.png'),
@@ -269,7 +272,7 @@ function createWindow() {
       sandbox: true,
       nodeIntegration: false,
       webSecurity: true,
-      spellcheck: false, // QuillPress has its own spelling checker
+      spellcheck: false, // Anne's Press has its own spelling checker
     },
   });
   // Links open in the system browser; the window never navigates away from the app.
@@ -280,7 +283,7 @@ function createWindow() {
   win.webContents.on('will-navigate', (e, url) => { if (!url.startsWith(ORIGIN)) { e.preventDefault(); if (safeUrl(url)) void shell.openExternal(url); } });
   // The page asks before unloading with unsaved publications: confirm here, as the browser would.
   win.webContents.on('will-prevent-unload', (e) => {
-    const choice = dialog.showMessageBoxSync(win, { type: 'question', buttons: ['Close without saving', 'Cancel'], defaultId: 1, cancelId: 1, title: 'Unsaved changes', message: 'Some publications have unsaved changes. Close QuillPress anyway?' });
+    const choice = dialog.showMessageBoxSync(win, { type: 'question', buttons: ['Close without saving', 'Cancel'], defaultId: 1, cancelId: 1, title: 'Unsaved changes', message: 'Some publications have unsaved changes. Close Anne\'s Press anyway?' });
     if (choice === 0) e.preventDefault();
   });
   // A reload or navigation drops the page's listeners until it registers them again.

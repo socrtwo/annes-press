@@ -1,6 +1,6 @@
 /** Prompts and output parsing for the publication AI features. */
 
-export const PRESS_SYSTEM = 'You are a writing and layout assistant inside QuillPress, an offline-first desktop publishing app. Follow the format instructions exactly. Do not add commentary before or after the requested output.';
+export const PRESS_SYSTEM = 'You are a writing and layout assistant inside Anne\'s Press, an offline-first desktop publishing app. Follow the format instructions exactly. Do not add commentary before or after the requested output.';
 
 export interface DraftPage { heading: string; deck?: string; body: string[]; sidebar?: { heading: string; body: string[] }; pullQuote?: string; caption?: string }
 export interface DraftPublication { title: string; subtitle?: string; pages: DraftPage[] }

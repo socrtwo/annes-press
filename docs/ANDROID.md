@@ -1,6 +1,6 @@
-# QuillPress for Android
+# Anne's Press for Android
 
-The Android app is the QuillPress web app (TypeScript/Vite, built into `dist/`) wrapped with
+The Android app is the Anne's Press web app (TypeScript/Vite, built into `dist/`) wrapped with
 [Capacitor 8](https://capacitorjs.com/). The native project lives in `android/` and is committed;
 `npx cap sync android` copies the web build into it and regenerates the Capacitor plugin glue.
 
@@ -65,7 +65,7 @@ Publishing:
   match `package.json`.
 - **Prerelease from any branch, without tagging:** Actions -> *Android* -> *Run workflow*, choose the
   branch, tick **prerelease**. This publishes a GitHub prerelease called
-  `QuillPress <version> (build <run number>)` under the tag `v<version>-build.<run number>` pointing at
+  `Anne's Press <version> (build <run number>)` under the tag `v<version>-build.<run number>` pointing at
   that commit.
 
 ## Signing
@@ -93,7 +93,7 @@ keytool -genkeypair -v \
   -keystore quillpress-release.jks \
   -alias quillpress \
   -keyalg RSA -keysize 4096 -validity 10000 \
-  -dname "CN=QuillPress, O=QuillPress, C=US"
+  -dname "CN=Anne's Press, O=Anne's Press, C=US"
 ```
 
 Keep the `.jks` file and its passwords somewhere safe and **never commit it** (`*.jks` and `*.keystore`
@@ -144,15 +144,15 @@ The `.aab` is for Google Play only; it cannot be installed directly.
 - **Open / Save As** use the system file picker (Storage Access Framework), so files in Drive,
   Dropbox, SD cards, etc. work and no storage permission is needed. Ctrl+S writes back to the same
   publication via a persisted URI permission.
-- **Open with QuillPress** (`ACTION_VIEW`) for `.pptx`, `.pptm`, `.ppsx`, `.ppsm`, `.potx`, `.potm`, `.ppt`, `.pps`, `.pot`,
+- **Open with Anne's Press** (`ACTION_VIEW`) for `.pptx`, `.pptm`, `.ppsx`, `.ppsm`, `.potx`, `.potm`, `.ppt`, `.pps`, `.pot`,
   `.odp`, `.otp`, `.fodp`, `.sxi`, `.md`, `.qsp` and `.qspe`. Files are matched by MIME type
   (`…publicationml.publication`, `…publicationml.pageshow`, `…publicationml.template`, `application/vnd.ms-powerpoint`,
   `…opendocument.publication`, `text/markdown`, `application/x-quillpress`) and, for providers that report a generic type, by extension.
-- **Share to QuillPress** (`ACTION_SEND`) for the same types. Text shared without a file arrives
+- **Share to Anne's Press** (`ACTION_SEND`) for the same types. Text shared without a file arrives
   as a `.txt` file and opens through the text import.
 - **Print** goes through Android's print service, which also offers *Save as PDF*.
 - **Share** sends the exported file to any app via the share sheet.
-- The activity is `singleTask`, so opening another file while QuillPress runs delivers it to the running
+- The activity is `singleTask`, so opening another file while Anne's Press runs delivers it to the running
   instance (`fileOpened` event).
 
 ## Native plugin API (`QuillNative`)
@@ -184,7 +184,7 @@ Notes:
 
 ## App icon
 
-The launcher icon is the Quill suite icon for this app: a white publication screen with a bar chart and a white quill on a
+The launcher icon is the Anne's Office suite icon for this app: a white publication screen with a bar chart and a white quill on a
 green tile. Its sources are `resources/icon.svg` (the full tile), `resources/icon-foreground.svg` (the
 adaptive-icon foreground, artwork inside the safe zone) and `resources/icon-background.txt` (the
 adaptive background color, `#1E7A46`). `node scripts/gen-android-icons.mjs` writes from them:

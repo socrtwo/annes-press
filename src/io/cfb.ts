@@ -4,7 +4,7 @@
  *
  * Used by the Microsoft Publisher reader (src/io/mspub.ts) and by file identification of other
  * compound files. The whole directory tree is read (storages and streams, with "/"-separated
- * paths); stream data is read on demand. Shared with the sister Quill apps.
+ * paths); stream data is read on demand. Shared with the sister Anne's Office apps.
  *
  * Every read is bounds-checked and every sector chain is cycle-guarded, so a damaged file
  * yields whatever is still reachable instead of throwing.

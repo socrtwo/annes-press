@@ -1,4 +1,4 @@
-/** QuillPress application core: publication tabs, command execution, macro recording, autosave. */
+/** Anne's Press application core: publication tabs, command execution, macro recording, autosave. */
 import { isSafeExternalUrl } from './util/sanitize';
 import { Pub } from './model/pub';
 import type { Item, Page, Master } from './model/types';
@@ -78,7 +78,7 @@ export class App {
   private listeners = new Set<(app: App) => void>();
   lastCommand: { id: string; arg?: any } | null = null;
   keyIndex = new Map<string, string>();
-  /** Clipboard of items and pages copied inside QuillPress. */
+  /** Clipboard of items and pages copied inside Anne's Press. */
   clip: { kind: 'items' | 'pages'; data: any; stories: any[]; media: Record<string, any>; text: string; time: number } | null = null;
   /** Format Painter: copied formatting, and whether it stays on. */
   painter: { fmt: any; sticky: boolean } | null = null;
@@ -142,7 +142,7 @@ export class App {
     this.ui.tabsChanged();
     tab.ui.layout();
     this.refresh();
-    document.title = `${tab.displayName}${tab.dirty ? ' •' : ''} – QuillPress`;
+    document.title = `${tab.displayName}${tab.dirty ? ' •' : ''} – Anne\'s Press`;
   }
 
   closeTab(tab: PubTab): void {
@@ -172,7 +172,7 @@ export class App {
     if (!tab.pub.page(tab.current)) tab.current = tab.pub.pages[0]?.id || '';
     tab.pageSel = tab.pageSel.filter((id) => tab.pub.page(id));
     if (tab.masterTarget && !tab.pub.data.masters.some((m) => m.id === tab.masterTarget)) tab.masterTarget = '';
-    if (!tab.dirty) { tab.dirty = true; this.ui.tabsChanged(); document.title = `${tab.displayName} • – QuillPress`; }
+    if (!tab.dirty) { tab.dirty = true; this.ui.tabsChanged(); document.title = `${tab.displayName} • – Anne\'s Press`; }
     this.scheduleAutosave();
     tab.ui.invalidate();
     this.refresh();

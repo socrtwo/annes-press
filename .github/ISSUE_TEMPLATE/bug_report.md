@@ -1,6 +1,6 @@
 ---
 name: Bug report
-about: Something does not work as described (once QuillPress has code), or a mistake in the plan
+about: Something does not work as described (once Anne's Press has code), or a mistake in the plan
 title: "[Bug] "
 labels: bug
 assignees: ''
@@ -17,7 +17,7 @@ A clear description of the problem.
 **What did you expect?**
 
 **Version and platform**
-- QuillPress version (Help ▸ About):
+- Anne's Press version (Help ▸ About):
 - Platform: Android / iOS / iPadOS / Windows / macOS / Linux / Raspberry Pi / ChromeOS / Web
 - OS version and device or browser:
 

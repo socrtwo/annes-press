@@ -6,8 +6,9 @@
 /** @type {import('electron-builder').Configuration} */
 module.exports = {
   appId: 'io.github.socrtwo.quillpress',
-  productName: 'QuillPress',
-  copyright: 'QuillPress contributors, MIT License',
+  productName: 'Anne\'s Press',
+  executableName: 'QuillPress', // the binary keeps its old name; the product (display) name is Anne's Press
+  copyright: 'Anne\'s Press contributors, MIT License',
   directories: { app: 'build/desktop-app', output: 'release', buildResources: 'resources' },
   artifactName: 'QuillPress-${version}-${os}-${arch}.${ext}',
   asar: true,
@@ -15,8 +16,8 @@ module.exports = {
   files: ['dist/**/*', 'electron/**/*', 'package.json', '!**/node_modules/**'],
   icon: 'resources/icon-1024.png',
   fileAssociations: [
-    { ext: 'qpp', name: 'QuillPress Publication', role: 'Editor', mimeType: 'application/x-quillpress' },
-    { ext: 'qppe', name: 'Encrypted QuillPress Publication', role: 'Editor', mimeType: 'application/x-quillpress-encrypted' },
+    { ext: 'qpp', name: 'Anne\'s Press Publication', role: 'Editor', mimeType: 'application/x-quillpress' },
+    { ext: 'qppe', name: 'Encrypted Anne\'s Press Publication', role: 'Editor', mimeType: 'application/x-quillpress-encrypted' },
     { ext: 'sla', name: 'Scribus Document', role: 'Editor', mimeType: 'application/x-scribus' },
     { ext: 'idml', name: 'InDesign Markup Document', role: 'Editor', mimeType: 'application/vnd.adobe.indesign-idml-package' },
   ],
@@ -28,7 +29,7 @@ module.exports = {
   mac: {
     target: [{ target: 'dmg', arch: ['universal'] }, { target: 'zip', arch: ['universal'] }],
     category: 'public.app-category.productivity',
-    extendInfo: { CFBundleDisplayName: 'QuillPress' },
+    extendInfo: { CFBundleDisplayName: 'Anne\'s Press' },
     // Ad-hoc signature: runs on Apple silicon without a paid Developer ID, but is not notarized,
     // so Gatekeeper asks once (docs/INSTALL.md). Hardened runtime would reject Electron's own signature.
     identity: '-',
@@ -39,7 +40,7 @@ module.exports = {
     target: [{ target: 'AppImage', arch: ['x64', 'arm64', 'armv7l'] }, { target: 'deb', arch: ['x64', 'arm64', 'armv7l'] }],
     category: 'Office;Publishing;Graphics',
     synopsis: 'Desktop publishing and page layout app with a complete, customizable command library',
-    description: 'QuillPress is an open-source desktop publishing app: frame-based pages, master pages, linked text frames, styles, pictures and tables, with PDF export and Scribus (.sla) compatibility. Every feature is a command you can put on the ribbon, the Quick Access Bar, a shortcut or a macro.',
+    description: 'Anne\'s Press is an open-source desktop publishing app: frame-based pages, master pages, linked text frames, styles, pictures and tables, with PDF export and Scribus (.sla) compatibility. Every feature is a command you can put on the ribbon, the Quick Access Bar, a shortcut or a macro.',
     maintainer: 'socrtwo <socrtwo@users.noreply.github.com>',
     executableName: 'quillpress',
     syncDesktopName: true,

@@ -1,12 +1,12 @@
-# QuillPress
+# Anne's Press
 
-*Part of the Quill suite: [QuillPen](https://github.com/socrtwo/QuillPen) (documents), [QuillGrid](https://github.com/socrtwo/QuillGrid) (spreadsheets), [QuillPost](https://github.com/socrtwo/QuillPost) (email), [QuillStage](https://github.com/socrtwo/QuillStage) (presentations), [QuillLoom](https://github.com/socrtwo/QuillLoom) (web sites), [QuillFolio](https://github.com/socrtwo/QuillFolio) (PDF) and **QuillPress** (desktop publishing).*
+*Part of the Anne's Office suite: [Anne's Pen](https://github.com/socrtwo/QuillPen) (documents), [Anne's Grid](https://github.com/socrtwo/QuillGrid) (spreadsheets), [Anne's Post](https://github.com/socrtwo/QuillPost) (email), [Anne's Stage](https://github.com/socrtwo/QuillStage) (presentations), [Anne's Loom](https://github.com/socrtwo/QuillLoom) (web sites), [Anne's Folio](https://github.com/socrtwo/QuillFolio) (PDF) and **Anne's Press** (desktop publishing).*
 
-An original, open-source desktop publishing and page layout app for Android, iOS, Windows, macOS, Linux, ChromeOS and the web whose goal is the same as the rest of the Quill suite: **no missing commands**. QuillPress gives you the familiar publication workflow (frame-based pages, master pages, text that flows through linked frames and columns, paragraph, character and object styles, pictures with cropping and text wrap, shapes, tables, guides, grids, layers, spreads and bleed), opens and saves Scribus documents, and adds the best ideas from forty years of page layout software: copy fitting, autoflow, story editing, typographer's quotes, preflight, packaging, an accessibility check and an optional AI tab that can run entirely on your device. Every feature is a command, and every command can be put on the Quick Access Bar, on your own tab, on a keyboard shortcut, or in a macro, and found with command search. When a publication is damaged, QuillPress recovers what it can instead of refusing to open it.
+An original, open-source desktop publishing and page layout app for Android, iOS, Windows, macOS, Linux, ChromeOS and the web whose goal is the same as the rest of the Anne's Office suite: **no missing commands**. Anne's Press gives you the familiar publication workflow (frame-based pages, master pages, text that flows through linked frames and columns, paragraph, character and object styles, pictures with cropping and text wrap, shapes, tables, guides, grids, layers, spreads and bleed), opens and saves Scribus documents, and adds the best ideas from forty years of page layout software: copy fitting, autoflow, story editing, typographer's quotes, preflight, packaging, an accessibility check and an optional AI tab that can run entirely on your device. Every feature is a command, and every command can be put on the Quick Access Bar, on your own tab, on a keyboard shortcut, or in a macro, and found with command search. When a publication is damaged, Anne's Press recovers what it can instead of refusing to open it.
 
 > **Status: first working version (0.1.0, milestone M1 with much of M2–M4).** The app builds for the web, Android, iOS and desktop with the same CI and release workflows as the sister apps. What works today:
 >
-> - **544 commands**; 544 of the 567 ids in the plan are implemented, and the 23 reserved for later milestones are listed in [docs/COMMANDS.md](docs/COMMANDS.md). A command is registered only when it works.
+> - **549 commands**; 549 of the 572 ids in the plan are implemented, and the 23 reserved for later milestones are listed in [docs/COMMANDS.md](docs/COMMANDS.md). A command is registered only when it works.
 > - **Layout:** pages on master pages, facing pages and spreads, margins, columns, guides, a document grid and a baseline grid; text frames with columns, insets and vertical alignment, linked into chains across pages; autoflow; overset marks; pictures with fitting, cropping, adjustments and text wrap; 90+ preset shapes; lines; tables; groups; layers; snapping and smart guides; undo/redo.
 > - **Text:** an original layout engine with justification, hyphenation, drop caps, bullets and numbering, tabs with leaders, rules, keep options and baseline-grid alignment; paragraph, character and object style sheets; fields (page number, page count, section, date, variables, continued-on/from); typographer's quotes; a story editor.
 > - **Files:** native .qpp (and AES-256 .qppe) and Scribus .sla open and save; text, Markdown, RTF, Word and HTML files place into frames; pictures (PNG, JPEG, GIF, WebP, BMP, TIFF, SVG, and Windows WMF/EMF metafiles converted to vector drawings) place into frames or open as pages; export to PDF (the app's own vector writer with page labels, trim box and crop marks), SVG, PNG/JPEG, a web page, text and Markdown, and a package ZIP. Damaged files go through the recovery pipeline. See [docs/FORMATS.md](docs/FORMATS.md) and [docs/RECOVERY.md](docs/RECOVERY.md).
@@ -22,7 +22,7 @@ An original, open-source desktop publishing and page layout app for Android, iOS
 ## Features and plan
 
 - **A complete command set.** Every command a desktop page layout program offers, tab by tab (File, Home, Insert, Page Design, Text, Arrange, Review, View, Tools, AI, Developer, Help, and the contextual Master Page, Text Frame, Picture, Shape, Line, Table Design and Table Layout tabs), plus commands adopted from other publishing tools. See [docs/COMMANDS-PLAN.md](docs/COMMANDS-PLAN.md).
-- **No missing commands.** Commands are data. The ribbon, the Quick Access Bar, custom tabs, context menus, keyboard shortcuts, macros and command search (Alt+Q) all refer to command ids, so anything QuillPress can do can be placed anywhere, including the 163 commands kept out of the default tabs.
+- **No missing commands.** Commands are data. The ribbon, the Quick Access Bar, custom tabs, context menus, keyboard shortcuts, macros and command search (Alt+Q) all refer to command ids, so anything Anne's Press can do can be placed anywhere, including the 163 commands kept out of the default tabs.
 - **Quick Access Bar** with the full desktop drop-down checklist (AutoSave, New, Open, Save, Email, Quick Print, Print Preview and Print, Spelling, Undo, Redo, Preview, Touch/Mouse Mode, Open Recent File) and **Add All Choices**, which puts Save and Print first and everything else in alphabetical order. The bar can sit at the top or at the bottom near the keyboard. See [docs/QAT.md](docs/QAT.md).
 - **Customize Tabs and Keyboard:** create tabs and groups, put any command in them, rename, reorder or hide built-in tabs, and rebind any command with conflict display. Layouts can be exported and imported.
 - **Innovations from other publishing software:** autoflow and linked frames, master pages with overrides, copy fitting by type scale and by rewriting, a story editor, paragraph rules and drop caps, typographer's quotes, text variables, step and repeat, paste in place, layout guides, baseline grids, preflight, packaging with a report, a print checklist and booklet order, pasted-text clean-up, and more. Each idea is credited in [docs/INNOVATIONS.md](docs/INNOVATIONS.md).
@@ -36,7 +36,7 @@ An original, open-source desktop publishing and page layout app for Android, iOS
 
 | Format | Open | Save | Notes |
 |---|---|---|---|
-| QuillPress publication (.qpp) and encrypted (.qppe) | Yes | Yes | Native ZIP package (JSON + pictures); AES-256 for .qppe |
+| Anne's Press publication (.qpp) and encrypted (.qppe) | Yes | Yes | Native ZIP package (JSON + pictures); AES-256 for .qppe |
 | Scribus document (.sla) | Yes | Yes | Scribus 1.4 and 1.5 XML: pages, masters, linked frames, styles, colors, embedded pictures |
 | InDesign Markup (.idml) | Yes | Yes | Spreads, master spreads, linked frames and stories, styles, swatches, layers, sections, footnotes; pictures embedded on save |
 | XPress Tags (.xtg), FrameMaker MIF (.mif) | Yes | No | Styled text; MIF also pages, text flows and variables |
@@ -44,7 +44,7 @@ An original, open-source desktop publishing and page layout app for Android, iOS
 | QuarkXPress (.qxp .qxd .qxt) | Yes for 3.1–4.1 | No | Pages, masters, chained text boxes, formatting, shapes, gradients, groups, text paths; pictures when embedded; other versions give text and pictures |
 | PageMaker (.pmd .p65 .pm6 .pmt) | Yes for 6–7 | No | Pages, text blocks, formatting, shapes, groups, placed TIFFs; earlier versions give text and pictures |
 | InDesign binary (.indd) | Text and pictures | No | No public description of the layout; save as IDML from InDesign instead |
-| QuillPress JSON (.json) | Yes | Yes | The publication as plain JSON |
+| Anne's Press JSON (.json) | Yes | Yes | The publication as plain JSON |
 | Text, Markdown, Rich Text, Word, HTML (.txt, .md, .rtf, .docx, .html) | Place or open | Text and Markdown export | Headings and lists become paragraph styles |
 | Pictures (.png, .jpg, .gif, .webp, .bmp, .tif, .svg) | Place or open | SVG, PNG, JPEG export | TIFF is decoded in the app |
 | PDF | No (planned) | Yes | Vector graphics, text in the publication's fonts embedded as subsets, page labels, trim and bleed boxes, crop marks |
@@ -62,29 +62,29 @@ Each release has builds for:
 - **ChromeOS** (Android app, Linux app or web app);
 - the **web** (static files; offline-capable and installable).
 
-On Android, QuillPress registers for *Open with* and *Share to* on publication, text and picture files and uses the system file picker, so files on the device, SD card and cloud providers all work. **Save** writes back to the same file.
+On Android, Anne's Press registers for *Open with* and *Share to* on publication, text and picture files and uses the system file picker, so files on the device, SD card and cloud providers all work. **Save** writes back to the same file.
 
 CI type-checks, tests and builds the web app and an APK on every push, and a **Release** workflow builds every platform and publishes them together from a tag `v*`, a manual run, or a `[release]` commit, as in the sister apps. See [docs/BUILD.md](docs/BUILD.md), [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) and [docs/ROADMAP.md](docs/ROADMAP.md).
 
-## The Quill suite
+## The Anne's Office suite
 
 | App | What it is | Repository |
 |---|---|---|
-| **QuillPen** | Word processor | https://github.com/socrtwo/QuillPen |
-| **QuillGrid** | Spreadsheet | https://github.com/socrtwo/QuillGrid |
-| **QuillPost** | Email | https://github.com/socrtwo/QuillPost |
-| **QuillStage** | Presentations | https://github.com/socrtwo/QuillStage |
-| **QuillLoom** | Web sites | https://github.com/socrtwo/QuillLoom |
-| **QuillFolio** | PDF viewing, editing, forms, signing, OCR and repair | https://github.com/socrtwo/QuillFolio |
-| **QuillPress** | Desktop publishing and page layout (this project) | https://github.com/socrtwo/QuillPress |
+| **Anne's Pen** | Word processor | https://github.com/socrtwo/QuillPen |
+| **Anne's Grid** | Spreadsheet | https://github.com/socrtwo/QuillGrid |
+| **Anne's Post** | Email | https://github.com/socrtwo/QuillPost |
+| **Anne's Stage** | Presentations | https://github.com/socrtwo/QuillStage |
+| **Anne's Loom** | Web sites | https://github.com/socrtwo/QuillLoom |
+| **Anne's Folio** | PDF viewing, editing, forms, signing, OCR and repair | https://github.com/socrtwo/QuillFolio |
+| **Anne's Press** | Desktop publishing and page layout (this project) | https://github.com/socrtwo/QuillPress |
 
-The apps share one application shell: the command registry, Quick Access Bar, customizable tabs and keyboard, command search, macro recorder, AI setup wizard and providers, spelling dictionaries, recovery engine and platform layer. QuillPress places documents written in QuillPen, hands its PDFs to QuillFolio, and shares publications through QuillPost.
+The apps share one application shell: the command registry, Quick Access Bar, customizable tabs and keyboard, command search, macro recorder, AI setup wizard and providers, spelling dictionaries, recovery engine and platform layer. Anne's Press places documents written in Anne's Pen, hands its PDFs to Anne's Folio, and shares publications through Anne's Post.
 
 ## Documentation
 
 | File | Contents |
 |---|---|
-| [docs/INNOVATIONS.md](docs/INNOVATIONS.md) | Survey of page layout software, past and present, and what QuillPress adopts from each |
+| [docs/INNOVATIONS.md](docs/INNOVATIONS.md) | Survey of page layout software, past and present, and what Anne's Press adopts from each |
 | [docs/QAT.md](docs/QAT.md) | The Quick Access Bar and the drop-down choices by version |
 | [docs/COMMANDS-PLAN.md](docs/COMMANDS-PLAN.md) | The planned command inventory, tab by tab, with command ids |
 | [docs/COMMANDS.md](docs/COMMANDS.md) | Every command the app ships (generated) |
@@ -108,4 +108,4 @@ The interface, code comments and documentation use American English. Spelling ch
 
 ## Legal
 
-QuillPress is an independent, clean-room project released under the MIT License. It is not affiliated with, endorsed by, or sponsored by Adobe, Quark, Microsoft, Serif, Canva, the Scribus team, any AI provider, or any other vendor. Product names appear only to describe file-format compatibility or the origin of an idea (nominative use). InDesign and PageMaker are trademarks of Adobe Inc.; QuarkXPress is a trademark of Quark Software Inc.; Microsoft Publisher is a trademark of Microsoft Corporation; other names belong to their owners. The interface, icons, templates and text are original or openly licensed. See [docs/LEGAL.md](docs/LEGAL.md).
+Anne's Press is an independent, clean-room project released under the MIT License. It is not affiliated with, endorsed by, or sponsored by Adobe, Quark, Microsoft, Serif, Canva, the Scribus team, any AI provider, or any other vendor. Product names appear only to describe file-format compatibility or the origin of an idea (nominative use). InDesign and PageMaker are trademarks of Adobe Inc.; QuarkXPress is a trademark of Quark Software Inc.; Microsoft Publisher is a trademark of Microsoft Corporation; other names belong to their owners. The interface, icons, templates and text are original or openly licensed. See [docs/LEGAL.md](docs/LEGAL.md).

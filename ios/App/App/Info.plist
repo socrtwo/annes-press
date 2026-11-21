@@ -7,7 +7,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>QuillPress</string>
+	<string>Anne's Press</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -43,12 +43,12 @@
       </array>
     </dict>
 	</dict>
-	<!-- File types QuillPress can open ("Open in" / Share sheet / Files app). -->
+	<!-- File types Anne's Press can open ("Open in" / Share sheet / Files app). -->
 	<key>CFBundleDocumentTypes</key>
 	<array>
 		<dict>
 			<key>CFBundleTypeName</key>
-			<string>QuillPress Publication</string>
+			<string>Anne's Press Publication</string>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>LSHandlerRank</key>
@@ -372,14 +372,14 @@
 			</dict>
 		</dict>
 	</array>
-	<!-- QuillPress's own file types. -->
+	<!-- Anne's Press's own file types. -->
 	<key>UTExportedTypeDeclarations</key>
 	<array>
 		<dict>
 			<key>UTTypeIdentifier</key>
 			<string>io.github.socrtwo.quillpress.qpp</string>
 			<key>UTTypeDescription</key>
-			<string>QuillPress Publication</string>
+			<string>Anne's Press Publication</string>
 			<key>UTTypeConformsTo</key>
 			<array>
 				<string>public.data</string>
@@ -401,7 +401,7 @@
 			<key>UTTypeIdentifier</key>
 			<string>io.github.socrtwo.quillpress.qppe</string>
 			<key>UTTypeDescription</key>
-			<string>Encrypted QuillPress Publication</string>
+			<string>Encrypted Anne's Press Publication</string>
 			<key>UTTypeConformsTo</key>
 			<array>
 				<string>public.data</string>

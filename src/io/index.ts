@@ -13,10 +13,10 @@ export const SLA_MIME = 'application/x-scribus';
 export const IDML_MIME = 'application/vnd.adobe.indesign-idml-package';
 
 export const FORMATS: FormatDef[] = [
-  { id: 'qpp', label: 'QuillPress Publication', ext: ['qpp'], mime: QPP_MIME, canImport: true, canExport: true },
-  { id: 'qppe', label: 'Encrypted QuillPress Publication', ext: ['qppe'], mime: QPPE_MIME, canImport: true, canExport: true },
+  { id: 'qpp', label: 'Anne\'s Press Publication', ext: ['qpp'], mime: QPP_MIME, canImport: true, canExport: true },
+  { id: 'qppe', label: 'Encrypted Anne\'s Press Publication', ext: ['qppe'], mime: QPPE_MIME, canImport: true, canExport: true },
   { id: 'sla', label: 'Scribus Document', ext: ['sla'], mime: SLA_MIME, canImport: true, canExport: true },
-  { id: 'json', label: 'QuillPress JSON', ext: ['json'], mime: 'application/json', canImport: true, canExport: true },
+  { id: 'json', label: 'Anne\'s Press JSON', ext: ['json'], mime: 'application/json', canImport: true, canExport: true },
   { id: 'svg', label: 'SVG Page', ext: ['svg'], mime: 'image/svg+xml', canImport: true, canExport: false },
   { id: 'txt', label: 'Plain Text', ext: ['txt'], mime: 'text/plain', canImport: true, canExport: false },
   { id: 'md', label: 'Markdown', ext: ['md', 'markdown'], mime: 'text/markdown', canImport: true, canExport: false },

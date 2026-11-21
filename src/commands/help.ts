@@ -17,13 +17,13 @@ def([
   {
     id: 'help.help', label: 'Help', icon: 'help', tab: 'Help', group: 'Help', keys: ['F1'], edits: false, noRecord: true,
     run: async () => {
-      await openDialog({ title: 'QuillPress Help', wide: true, ok: 'Close', cancel: false, fields: [{ key: 'i', type: 'info', html: [
+      await openDialog({ title: 'Anne\'s Press Help', wide: true, ok: 'Close', cancel: false, fields: [{ key: 'i', type: 'info', html: [
         '<p><b>Every feature is a command.</b> Search for any of them with Alt+Q (the magnifier in the title bar), put them on the Quick Access Bar, your own tabs or keyboard shortcuts, or record them in macros.</p>',
         '<p><b>Pages:</b> Insert Page (Ctrl+Shift+P), drag thumbnails to reorder, right-click (or long-press) for more. Pages are built on master pages (Page Design ▸ Edit Master Page) that carry folios, running heads and guides.</p>',
         '<p><b>Frames:</b> Everything on a page is a frame: text frames, picture frames, shapes, lines and tables. Drag to move, the handles resize, the top handle rotates; Shift keeps proportions. Double-click a text frame to type.</p>',
         '<p><b>Text flow:</b> Link frames (Text ▸ Link Frames) so a story runs from one frame to the next, across columns and pages. A red mark at the bottom of a frame means overset text; Autoflow adds pages until it fits.</p>',
         '<p><b>Styles:</b> Paragraph, character and object styles keep a publication consistent (Home ▸ Styles). Swatches, color schemes and font schemes live under Page Design.</p>',
-        '<p><b>Files:</b> Opens and saves QuillPress publications (.qpp, encrypted .qppe) and Scribus documents (.sla); places text (.txt, .md, .rtf, .docx, .html) and pictures; exports PDF, SVG, PNG/JPEG, web pages and text. Damaged files are repaired on open.</p>',
+        '<p><b>Files:</b> Opens and saves Anne\'s Press publications (.qpp, encrypted .qppe) and Scribus documents (.sla); places text (.txt, .md, .rtf, .docx, .html) and pictures; exports PDF, SVG, PNG/JPEG, web pages and text. Damaged files are repaired on open.</p>',
         `<p>Documentation: <a href="${REPO}#readme" target="_blank" rel="noopener">${REPO}</a></p>`,
       ].join('') }] });
     },
@@ -45,9 +45,9 @@ def([
     },
   },
   {
-    id: 'help.about', label: 'About QuillPress', icon: 'info', tab: 'Help', group: 'Help', edits: false, noRecord: true,
+    id: 'help.about', label: 'About Anne\'s Press', icon: 'info', tab: 'Help', group: 'Help', edits: false, noRecord: true,
     run: async () => {
-      await openDialog({ title: 'About QuillPress', ok: 'Close', cancel: false, fields: [{ key: 'i', type: 'info', html: `<p><b>QuillPress ${VERSION}</b> — an original, open-source desktop publishing and page layout app. Part of the Quill suite (QuillPen, QuillGrid, QuillPost, QuillStage, QuillLoom, QuillFolio).</p><p>${commandCount()} commands, every one placeable on the Quick Access Bar, a tab, a shortcut or a macro.</p><p>MIT License. Copyright © 2026 Paul D Pruitt. Not affiliated with any publishing-software vendor; product names are used only to describe compatibility.</p><p><a href="${REPO}" target="_blank" rel="noopener">${REPO}</a></p>` }] });
+      await openDialog({ title: 'About Anne\'s Press', ok: 'Close', cancel: false, fields: [{ key: 'i', type: 'info', html: `<p><b>Anne\'s Press ${VERSION}</b> — an original, open-source desktop publishing and page layout app. Part of the Anne\'s Office suite (Anne\'s Pen, Anne\'s Grid, Anne\'s Post, Anne\'s Stage, Anne\'s Loom, Anne\'s Folio).</p><p>${commandCount()} commands, every one placeable on the Quick Access Bar, a tab, a shortcut or a macro.</p><p>MIT License. Copyright © 2026 Paul D Pruitt. Not affiliated with any publishing-software vendor; product names are used only to describe compatibility.</p><p><a href="${REPO}" target="_blank" rel="noopener">${REPO}</a></p>` }] });
     },
   },
 ]);

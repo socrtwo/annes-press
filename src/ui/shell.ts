@@ -705,12 +705,12 @@ export class Shell {
 
   async tour(): Promise<void> {
     const steps = [
-      ['Everything is a command', 'Every feature of QuillPress is a command you can find with the search button (or Alt+Q), place on the Quick Access Bar, put on your own tab, assign a key, or record in a macro.'],
+      ['Everything is a command', 'Every feature of Anne\'s Press is a command you can find with the search button (or Alt+Q), place on the Quick Access Bar, put on your own tab, assign a key, or record in a macro.'],
       ['Quick Access Bar', 'Tap ▾ at the end of the Quick Access Bar to add common commands, or choose More Commands… to pick from the full library. Long-press or right-click any ribbon button to add it. You can move the bar below the ribbon or to the bottom, near the keyboard.'],
       ['Frames', 'Everything on a page is a frame. Drag out a text frame (Insert ▸ Text Frame) and type; place a picture into a picture frame; draw shapes and lines. Drag the handles to resize, the top handle to rotate.'],
       ['Flowing text', 'When a story does not fit, the frame shows a red overset mark. Drag the out-port at the bottom right of a text frame onto another frame (on any page) to link them, and the text flows on. Columns, insets and vertical alignment are in the Text tab.'],
       ['Master pages and styles', 'Master pages hold page numbers, running heads and guides that every page shares. Paragraph and character styles keep typography consistent; redefine a style and every paragraph using it follows.'],
-      ['Files', 'Open and save QuillPress publications (.qpp) and Scribus documents (.sla); export to PDF, SVG, pictures and HTML. Damaged files are repaired on open; File ▸ Open ▸ Open and Repair forces it.'],
+      ['Files', 'Open and save Anne\'s Press publications (.qpp) and Scribus documents (.sla); export to PDF, SVG, pictures and HTML. Damaged files are repaired on open; File ▸ Open ▸ Open and Repair forces it.'],
     ];
     for (let i = 0; i < steps.length; i++) {
       const r = await openDialog({ title: `${steps[i][0]} (${i + 1}/${steps.length})`, content: h('p', { class: 'ql-msg' }, steps[i][1]), ok: i === steps.length - 1 ? 'Start' : 'Next', cancel: 'Skip tour' });

@@ -13,7 +13,7 @@ import type { Item, Page, Paragraph, Publication, Story, TableItem } from '../mo
 import { installedDictionaries, dictionaryFor, loadDictionary } from './dictionaries';
 
 // --------------------------------------------------------------------------------------------
-// Worker protocol (same messages as QuillPen's proofing engine)
+// Worker protocol (same messages as Anne's Pen's proofing engine)
 
 let worker: Worker | null = null;
 let workerFailures = 0;

@@ -9,7 +9,7 @@
  * src/io/idmlExportText.ts writes the resources and the stories; src/io/idml.ts reads packages.
  *
  * Coordinates: IDML items carry their path in their own space and an ItemTransform into spread
- * space; a page's ItemTransform places it in the spread. QuillPress items are written with a path in
+ * space; a page's ItemTransform places it in the spread. Anne's Press items are written with a path in
  * the item's own box (0..w, 0..h) and a transform translate(center) · rotate · flip · translate(−w/2,
  * −h/2), which the importer inverts.
  */
@@ -262,7 +262,7 @@ function metadataXml(P: Publication): string {
     + (P.props.author ? `<dc:creator><rdf:Seq><rdf:li>${esc(P.props.author)}</rdf:li></rdf:Seq></dc:creator>` : '')
     + (P.props.description ? `<dc:description>${alt(P.props.description)}</dc:description>` : '')
     + (P.props.keywords ? `<dc:subject><rdf:Bag>${P.props.keywords.split(/[,;]\s*/).filter(Boolean).map((k) => `<rdf:li>${esc(k)}</rdf:li>`).join('')}</rdf:Bag></dc:subject>` : '')
-    + `<xmp:CreatorTool>QuillPress</xmp:CreatorTool><xmp:ModifyDate>${when}</xmp:ModifyDate>`
+    + `<xmp:CreatorTool>Anne\'s Press</xmp:CreatorTool><xmp:ModifyDate>${when}</xmp:ModifyDate>`
     + '</rdf:Description></rdf:RDF></x:xmpmeta>\n<?xpacket end="w"?>\n';
 }
 
@@ -367,7 +367,7 @@ export async function exportIdml(pub: Pub): Promise<Uint8Array> {
   const docName = `${(P.props.title || 'Publication').replace(/[\\/:*?"<>|]+/g, ' ').trim() || 'Publication'}.indd`;
   const designmap = `${XML_DECL}<?aid style="50" type="document" readerVersion="6.0" featureSet="257" product="16.0(16)" ?>\n`
     + `<Document xmlns:idPkg="${IDML_NS}" DOMVersion="${DOM_VERSION}" Self="d" StoryList="${env.storyFiles.map((s) => s.self).join(' ')}" Name="${esc(docName)}" ZeroPoint="0 0" ActiveLayer="${env.layerSelf.get('default')}" CMYKProfile="U.S. Web Coated (SWOP) v2" RGBProfile="sRGB IEC61966-2.1" SolidColorIntent="UseColorSettings" AfterBlendingIntent="UseColorSettings" DefaultImageIntent="UseColorSettings" RGBPolicy="PreserveEmbeddedProfiles" CMYKPolicy="PreserveEmbeddedProfiles" AccurateLABSpots="false">\n`
-    + '<Properties><Label><KeyValuePair Key="kAdobeDPS_DocumentCreator" Value="QuillPress"/></Label></Properties>\n'
+    + '<Properties><Label><KeyValuePair Key="kAdobeDPS_DocumentCreator" Value="Anne\'s Press"/></Label></Properties>\n'
     + `<Language Self="Language/$ID/English%3a USA" Name="$ID/English: USA" SingleQuotes="&#x2018;&#x2019;" DoubleQuotes="&#x201c;&#x201d;" PrimaryLanguageName="$ID/English" SublanguageName="$ID/USA" Id="269" HyphenationVendor="Hunspell" SpellingVendor="Hunspell"/>\n`
     + '<idPkg:Graphic src="Resources/Graphic.xml"/>\n<idPkg:Fonts src="Resources/Fonts.xml"/>\n<idPkg:Styles src="Resources/Styles.xml"/>\n<idPkg:Preferences src="Resources/Preferences.xml"/>\n'
     + variablesXml + layersXml + sectionsXml

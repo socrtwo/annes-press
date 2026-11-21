@@ -139,7 +139,7 @@ async function toItem(ctx: Ctx, o: QxpObject, off: Rect): Promise<Item | null> {
   const fill = fillOf(o.fill);
   const isLineShape = o.shape === 'line' || o.shape === 'orthoLine' || o.shape === 'bezierLine';
   const line = lineOf(o.frame, isLineShape);
-  // QuarkXPress draws a box's frame inside its bounds (QuillPress strokes on the outline), so a framed
+  // QuarkXPress draws a box's frame inside its bounds (Anne's Press strokes on the outline), so a framed
   // box is drawn half a frame width smaller and its text inset by the rest of the frame.
   const half = !isLineShape && o.content !== 'objects' && line?.width ? Math.min(line.width / 2, w / 2, h / 2) : 0;
   const base = { x: r2(x + half), y: r2(y + half), w: r2(w - 2 * half), h: r2(h - 2 * half), ...(o.rotation ? { rot: r2(-o.rotation) } : {}), ...(o.skew ? { skew: r2(o.skew) } : {}), ...(o.hflip ? { flipH: true } : {}), ...(o.vflip ? { flipV: true } : {}) };
@@ -251,7 +251,7 @@ function fillOf(f: string | Gradient | undefined): Fill | undefined {
   if (!f) return undefined;
   if (typeof f === 'string') return { type: 'solid', color: f };
   // QuarkXPress blends run from the first colour to the second at an angle measured counter-clockwise
-  // (QuillPress angles run clockwise, the y axis pointing down); circular, rectangular and diamond
+  // (Anne's Press angles run clockwise, the y axis pointing down); circular, rectangular and diamond
   // blends have the second colour at the centre; a mid-linear blend has the second colour in the middle.
   const radial = f.kind === 'circular' || f.kind === 'fullCircular' || f.kind === 'rectangular' || f.kind === 'diamond';
   if (radial) return { type: 'gradient', stops: [{ pos: 0, color: f.color2 }, { pos: 1, color: f.color1 }], path: 'radial' };
@@ -262,7 +262,7 @@ function fillOf(f: string | Gradient | undefined): Fill | undefined {
   return { type: 'gradient', stops, angle, path: 'linear' };
 }
 
-/** QuillPress dash presets as (on, off, …) in line widths, as the renderer draws them. */
+/** Anne's Press dash presets as (on, off, …) in line widths, as the renderer draws them. */
 const DASH_PRESETS: [Dash, number[]][] = [
   ['dash', [4, 3]], ['dot', [1, 2]], ['dashDot', [4, 2, 1, 2]], ['longDash', [8, 3]], ['longDashDot', [8, 3, 1, 3]], ['sysDash', [3, 1]], ['sysDot', [1, 1]],
 ];
@@ -300,7 +300,7 @@ function lineOf(f: Frame | undefined, hairline = false): Line | undefined {
   if (f.dash?.cap === 'round') l.cap = 'round';
   if (f.dash?.join && f.dash.join !== 'miter') l.join = f.dash.join;
   // Arrow types: 1 arrowhead at the end, 2 at the start, 3 tail feather at the start and arrowhead
-  // at the end, 4 the reverse, 5 arrowheads at both ends. A line starts at its first point (QuillPress
+  // at the end, 4 the reverse, 5 arrowheads at both ends. A line starts at its first point (Anne's Press
   // `head`) and ends at its second (`tail`); the feather is drawn as a diamond (no feather end exists).
   switch (f.arrow) {
     case 1: l.tail = 'triangle'; break;
@@ -396,7 +396,7 @@ function resolveStories(ctx: Ctx): void {
     const frames = refs.filter((r): r is TextRef & { frame: TextFrame } => r.frame.kind === 'text');
     const paths = refs.filter((r): r is TextRef & { frame: PathTextItem } => r.frame.kind === 'pathText');
     const empty = (): Paragraph[] => [{ style: 'Body', runs: [] }];
-    // Text paths hold their own text in QuillPress: each one in a chain takes the characters between
+    // Text paths hold their own text in Anne's Press: each one in a chain takes the characters between
     // its offset and the next object's, and the frames of the chain flow the rest.
     const ranges: [number, number][] = [];
     if (owner?.text) {

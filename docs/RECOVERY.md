@@ -1,6 +1,6 @@
 # Recovering damaged publications
 
-QuillPress inherits the suite's recovery engine, which descends from the author's tools: byte-level ZIP salvage and the ImmortalInflate decoder of [Immortal Unzipper / Immortal Zip](https://socrtwo.github.io/Immortal-Zip/), XML healing and strings scans from [Word Recovery](https://github.com/socrtwo/wordrecovery-SF), and the S2 File Identifier.
+Anne's Press inherits the suite's recovery engine, which descends from the author's tools: byte-level ZIP salvage and the ImmortalInflate decoder of [Immortal Unzipper / Immortal Zip](https://socrtwo.github.io/Immortal-Zip/), XML healing and strings scans from [Word Recovery](https://github.com/socrtwo/wordrecovery-SF), and the S2 File Identifier.
 
 ## When it runs
 
@@ -14,7 +14,7 @@ The report (`RecoveryReport`, shown by `showRecoveryReport`) lists each method, 
 
 | Method | What it does |
 |---|---|
-| **Identify** | Reads the bytes, not the name (`fileid.ts`): ZIP with the QuillPress mimetype, Scribus XML, JSON, text, pictures, other office files, archives. Reports when the name and content disagree, and when several files were concatenated. Encrypted `.qppe` files stop here: nothing can be repaired without the password. |
+| **Identify** | Reads the bytes, not the name (`fileid.ts`): ZIP with the Anne's Press mimetype, Scribus XML, JSON, text, pictures, other office files, archives. Reports when the name and content disagree, and when several files were concatenated. Encrypted `.qppe` files stop here: nothing can be repaired without the password. |
 | **Open** | The normal reader. If it succeeds (or Open and Repair was not asked for), this is the result. |
 | **ZIP salvage** | Walks the local file headers of a `.qpp` whose central directory is missing or wrong (truncated downloads, interrupted saves), inflates each entry with ImmortalInflate, which resynchronizes past damaged blocks instead of giving up, and rebuilds `publication.json` and `media/`. Entries that cannot be read are listed as lost. |
 | **JSON repair** | A truncated or corrupted `publication.json`: cuts the text at the last complete page, item, story or style, closes the open brackets and strings (`repairJsonText`), and sanitizes the result (`Pub.fromJSON` fills in anything missing). |
@@ -34,7 +34,7 @@ The best result is chosen by what it contains (pages, objects, words, pictures) 
 
 ## Manual options
 
-When nothing works, the dialog (`file.recoveryHelp`) lists what to try: open the file with Scribus or another program and save a copy; look for the previous version in your backups or cloud history; for a `.qpp`, rename it `.zip` and inspect it; and the author's online S2 tools, which handle other formats. QuillPress's own drafts (AutoSave) and snapshots (File ▸ Info ▸ Version History) are separate copies kept on the device, so a damaged file on disk rarely means lost work.
+When nothing works, the dialog (`file.recoveryHelp`) lists what to try: open the file with Scribus or another program and save a copy; look for the previous version in your backups or cloud history; for a `.qpp`, rename it `.zip` and inspect it; and the author's online S2 tools, which handle other formats. Anne's Press's own drafts (AutoSave) and snapshots (File ▸ Info ▸ Version History) are separate copies kept on the device, so a damaged file on disk rarely means lost work.
 
 ## Tests
 

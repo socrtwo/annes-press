@@ -39,7 +39,7 @@ const RECOMMEND_ORDER: Record<string, string[]> = {
   xml: ['xmltrncatorfixr'],
 };
 
-/** File kinds QuillPress itself opens or places. */
+/** File kinds Anne's Press itself opens or places. */
 export const HANDLED_HERE = ['qpp', 'sla', 'json', 'xml', 'txt', 'docx', 'rtf', 'html', 'png', 'jpg', 'gif', 'bmp', 'tif', 'webp', 'zip', 'svg', 'idml', 'indd', 'pub', 'qxp', 'pmd', 'mif', 'xtg'];
 
 export const DESCRIPTIONS: Record<string, string> = {
@@ -52,7 +52,7 @@ export const DESCRIPTIONS: Record<string, string> = {
   rtf: 'Rich Text Format document (RTF)', '7z': '7-Zip archive', rar: 'RAR archive', gz: 'GZIP compressed data', xml: 'XML document',
   html: 'HTML document', sqlite: 'SQLite database', pst: 'Outlook data file (PST/OST)', wav: 'WAV audio', avi: 'AVI video', webp: 'WebP image',
   ogg: 'OGG media', flac: 'FLAC audio', mp3: 'MP3 audio', mp4: 'MP4 / QuickTime media', exe: 'Windows executable (EXE/DLL)',
-  txt: 'Plain text', csv: 'Comma-separated values (CSV)', bin: 'Unrecognized binary data', qpp: 'QuillPress publication (QPP)', sla: 'Scribus document (SLA)', json: 'JSON data', svg: 'SVG drawing',
+  txt: 'Plain text', csv: 'Comma-separated values (CSV)', bin: 'Unrecognized binary data', qpp: 'Anne\'s Press publication (QPP)', sla: 'Scribus document (SLA)', json: 'JSON data', svg: 'SVG drawing',
   idml: 'InDesign Markup Language package (IDML)', indd: 'InDesign document (INDD)', pub: 'Microsoft Publisher publication (PUB)', qxp: 'QuarkXPress document (QXP)', pmd: 'PageMaker publication (PMD)', mif: 'FrameMaker Interchange Format (MIF)', xtg: 'XPress Tags text (XTG)',
 };
 

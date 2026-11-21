@@ -160,11 +160,11 @@ export async function recoverPublication(data: Uint8Array | ArrayBuffer, name: s
   const kind: PublicationKind = ext === 'qpp' ? 'qpp' : ext === 'sla' ? 'sla' : ext === 'json' ? 'json' : ext === 'zip' ? 'zip' : ['txt', 'rtf', 'html', 'docx', 'xml'].includes(ext) ? 'text' : ['idml', 'indd', 'pub', 'qxp', 'pmd', 'mif', 'xtg'].includes(ext) ? 'layout' : ext === 'bin' ? 'unknown' : 'other';
   const head = String.fromCharCode(...bytes.subarray(0, 5));
   if (head === 'QFDE1') {
-    add('identify', 'success', 'Encrypted QuillPress publication (.qppe). Encrypted data cannot be repaired without the password; try opening it with the password first.');
+    add('identify', 'success', 'Encrypted Anne\'s Press publication (.qppe). Encrypted data cannot be repaired without the password; try opening it with the password first.');
     return finish('qppe', null);
   }
   add('identify', ident.multiple ? 'partial' : 'success', `${ident.primary.description} (${ident.primary.confidence} confidence)${ident.multiple ? `; ${ident.segments.length} pieces found inside the file` : ''}`);
-  if (ident.mismatch && ident.foreign.length && !ident.matching.length) notes.push(`The file is ${ident.primary.description}, which QuillPress does not open; its pieces can be saved below.`);
+  if (ident.mismatch && ident.foreign.length && !ident.matching.length) notes.push(`The file is ${ident.primary.description}, which Anne\'s Press does not open; its pieces can be saved below.`);
   const work = ident.proceedBytes || bytes;
 
   // b. Normal open
@@ -328,7 +328,7 @@ export async function recoverPub(data: Uint8Array, name: string, opts: RecoverOp
 }
 
 export function reportText(r: RecoveryReport): string {
-  const lines = [`QuillPress recovery report: ${r.fileName}`, r.summary, `Identified as: ${r.identification.description} (${r.identification.confidence})`, ''];
+  const lines = [`Anne's Press recovery report: ${r.fileName}`, r.summary, `Identified as: ${r.identification.description} (${r.identification.confidence})`, ''];
   for (const m of r.methods) lines.push(`${m.status.toUpperCase().padEnd(8)} ${m.name}${r.bestMethod === m.id ? ' (used)' : ''}: ${m.detail || ''}`);
   if (r.notes.length) lines.push('', ...r.notes);
   return lines.join('\n');

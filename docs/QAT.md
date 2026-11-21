@@ -1,19 +1,19 @@
 # Quick Access Bar
 
-The Quick Access Bar (QAT) offers everything a desktop page layout program puts on its Quick Access Toolbar, and more. It follows the implementation shared by the Quill apps (`QAT_STANDARD`, `QAT_EXTRAS`, `addAllQatChoices` in `src/prefs.ts`).
+The Quick Access Bar (QAT) offers everything a desktop page layout program puts on its Quick Access Toolbar, and more. It follows the implementation shared by the Anne's Office apps (`QAT_STANDARD`, `QAT_EXTRAS`, `addAllQatChoices` in `src/prefs.ts`).
 
 ## Principles
 
 - Every command is eligible. The QAT stores command ids; any of the commands in [COMMANDS.md](COMMANDS.md), plus macros (`macro:<name>`) and separators (`|`), can be placed on it.
 - The drop-down arrow at the end of the bar offers the **standard choices** as a checklist, so the common ones are one tap away without opening a dialog.
-- QuillPress's checklist is the **union** of the choices the desktop office programs have offered across their versions, plus publishing extras. Nothing that any version offered is left out.
-- The bar can sit at the top, below the ribbon, or **at the bottom near the on-screen keyboard** (a Quill suite innovation), and can show or hide command labels.
+- Anne's Press's checklist is the **union** of the choices the desktop office programs have offered across their versions, plus publishing extras. Nothing that any version offered is left out.
+- The bar can sit at the top, below the ribbon, or **at the bottom near the on-screen keyboard** (an Anne's Office suite innovation), and can show or hide command labels.
 
 ## The desktop drop-down choices
 
-The *Customize Quick Access Toolbar* drop-down of the desktop office programs offers, across versions: AutoSave, New, Open, Save, Email, Quick Print, Print Preview and Print, Spelling, Undo, Redo, Open Recent File, Touch/Mouse Mode, More Commands…, Show Below/Above the Ribbon, Minimize/Collapse the Ribbon, Hide Quick Access Toolbar, and Show/Hide command labels. Presentation programs add *Start from Beginning*; QuillPress's equivalent is **Preview** (`view.previewMode`), which hides the guides and frame edges and shows the page as it prints.
+The *Customize Quick Access Toolbar* drop-down of the desktop office programs offers, across versions: AutoSave, New, Open, Save, Email, Quick Print, Print Preview and Print, Spelling, Undo, Redo, Open Recent File, Touch/Mouse Mode, More Commands…, Show Below/Above the Ribbon, Minimize/Collapse the Ribbon, Hide Quick Access Toolbar, and Show/Hide command labels. Presentation programs add *Start from Beginning*; Anne's Press's equivalent is **Preview** (`view.previewMode`), which hides the guides and frame edges and shows the page as it prints.
 
-| Choice | QuillPress command |
+| Choice | Anne's Press command |
 |---|---|
 | AutoSave | `file.autosave` |
 | New | `file.new` |
@@ -34,7 +34,7 @@ The *Customize Quick Access Toolbar* drop-down of the desktop office programs of
 | Hide Quick Access Toolbar | `view.qatHide` (restore: `view.qatShow`) |
 | Show / Hide command labels | `view.qatLabels` |
 
-## QuillPress's drop-down
+## Anne's Press's drop-down
 
 1. **Standard choices** (the union above): AutoSave, New, Open, Save, Email, Quick Print, Print Preview and Print, Spelling, Undo, Redo, Preview, Touch/Mouse Mode, Open Recent File.
 2. **Publishing extras:** Insert Page (`page.insert`), Text Frame (`insert.textFrame`), Picture (`insert.picture`), Save As (`file.saveAs`), Share (`file.share`), Export to PDF (`file.export.pdf`), Draw Table (`insert.drawTable`), Find (`edit.find`), Format Painter (`edit.formatPainter`), Search Commands (`view.cmdSearch`).

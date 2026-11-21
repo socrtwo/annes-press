@@ -1,16 +1,16 @@
 # File formats
 
-QuillPress recognizes files by their **content, not their extension** (`sniffFormat` in `src/io/index.ts`): a misnamed file opens with the right reader. Damaged files go through the recovery pipeline automatically ([RECOVERY.md](RECOVERY.md)).
+Anne's Press recognizes files by their **content, not their extension** (`sniffFormat` in `src/io/index.ts`): a misnamed file opens with the right reader. Damaged files go through the recovery pipeline automatically ([RECOVERY.md](RECOVERY.md)).
 
-This file describes what is implemented now. The longer list of page layout formats QuillPress intends to read is in [FORMATS-PLAN.md](FORMATS-PLAN.md).
+This file describes what is implemented now. The longer list of page layout formats Anne's Press intends to read is in [FORMATS-PLAN.md](FORMATS-PLAN.md).
 
 ## Summary
 
 | Format | Extensions | Open | Save | Code |
 |---|---|---|---|---|
-| QuillPress publication | .qpp | Yes | Yes | `src/io/qpp.ts` |
-| Encrypted QuillPress publication | .qppe | Yes | Yes | `src/io/qpp.ts`, `src/util/crypto.ts` |
-| QuillPress JSON | .json | Yes | Yes | `src/io/qpp.ts` |
+| Anne's Press publication | .qpp | Yes | Yes | `src/io/qpp.ts` |
+| Encrypted Anne's Press publication | .qppe | Yes | Yes | `src/io/qpp.ts`, `src/util/crypto.ts` |
+| Anne's Press JSON | .json | Yes | Yes | `src/io/qpp.ts` |
 | Scribus document | .sla | Yes | Yes | `src/io/sla.ts` |
 | InDesign Markup Language | .idml | Yes (layout, stories, styles, colors) | Yes (layout, stories, styles, colors, embedded pictures) | `src/io/idml.ts`, `src/io/idmlText.ts`, `src/io/idmlExport.ts`, `src/io/idmlExportText.ts` |
 | InDesign document | .indd .indt | Text and pictures only | No | `src/io/legacyLayout.ts` |
@@ -27,7 +27,7 @@ This file describes what is implemented now. The longer list of page layout form
 | Web page | .html | — | Yes | `src/export/html.ts` |
 | Package | .zip | — | Yes | `file.package` in `src/commands/file.ts` |
 
-## QuillPress publication (.qpp)
+## Anne's Press publication (.qpp)
 
 A ZIP package, in the OpenDocument tradition:
 
@@ -53,9 +53,9 @@ The round trip is tested in `tests/unit/io.test.ts`. The reader is tolerant: unk
 
 **IDML** is Adobe's documented interchange package: a ZIP of XML files. `src/io/idml.ts` reads the package and `src/io/idmlText.ts` its resources and stories.
 
-**Imported:** page size, facing pages, bleed and the display unit (`Resources/Preferences.xml`); layers; master spreads (one QuillPress master per master-spread page, named *A-Master (Left)* / *(Right)* for facing pages) with their margins, columns and items; spreads with pages, each page's margins and columns, and the master applied by side; sections (page numbering) and custom text variables; `Resources/Graphic.xml` colors (CMYK, RGB and Lab), tints and gradients as swatches and fills; `Resources/Styles.xml` paragraph styles (size, font, bold/italic, alignment, indents, spacing, leading, hyphenation, drop caps, keep options, bullets and numbering, tabs, rules, based-on and next style), character styles and object styles; text frames with columns, gutter, insets, vertical alignment, auto-size, ignore-wrap and their story **chains** (`PreviousTextFrame`/`NextTextFrame`); rectangles, ovals, polygons (as custom paths), lines and groups with fills, strokes, dashes, opacity, rotation (from `ItemTransform`), lock, visibility, names and text wrap; picture frames with the picture when it is embedded in the package, otherwise the linked file's name (IDML does not carry linked pictures: the frame is kept and the warning lists the names for Tools ▸ Relink Picture); stories with paragraph and character style ranges and local overrides, forced line breaks, tabs, text variables, hyperlinks' text, tables (as tab-separated rows) and footnotes (into the publication's footnotes when the model has them, otherwise as a *Notes* list at the end of the story). Objects anchored in text are placed as free objects near the story's first frame.
+**Imported:** page size, facing pages, bleed and the display unit (`Resources/Preferences.xml`); layers; master spreads (one Anne's Press master per master-spread page, named *A-Master (Left)* / *(Right)* for facing pages) with their margins, columns and items; spreads with pages, each page's margins and columns, and the master applied by side; sections (page numbering) and custom text variables; `Resources/Graphic.xml` colors (CMYK, RGB and Lab), tints and gradients as swatches and fills; `Resources/Styles.xml` paragraph styles (size, font, bold/italic, alignment, indents, spacing, leading, hyphenation, drop caps, keep options, bullets and numbering, tabs, rules, based-on and next style), character styles and object styles; text frames with columns, gutter, insets, vertical alignment, auto-size, ignore-wrap and their story **chains** (`PreviousTextFrame`/`NextTextFrame`); rectangles, ovals, polygons (as custom paths), lines and groups with fills, strokes, dashes, opacity, rotation (from `ItemTransform`), lock, visibility, names and text wrap; picture frames with the picture when it is embedded in the package, otherwise the linked file's name (IDML does not carry linked pictures: the frame is kept and the warning lists the names for Tools ▸ Relink Picture); stories with paragraph and character style ranges and local overrides, forced line breaks, tabs, text variables, hyperlinks' text, tables (as tab-separated rows) and footnotes (into the publication's footnotes when the model has them, otherwise as a *Notes* list at the end of the story). Objects anchored in text are placed as free objects near the story's first frame.
 
-**Not imported:** buttons, forms, sounds and movies (counted in the warning), XML structure, conditional text, object effects beyond opacity, and InDesign's own typesetting (optical kerning, justification settings), so lines break where QuillPress breaks them.
+**Not imported:** buttons, forms, sounds and movies (counted in the warning), XML structure, conditional text, object effects beyond opacity, and InDesign's own typesetting (optical kerning, justification settings), so lines break where Anne's Press breaks them.
 
 **Exported (File ▸ Save As / Export ▸ InDesign Markup):** `src/io/idmlExport.ts` and `src/io/idmlExportText.ts` write a package laid out as the IDML specification requires: `mimetype` first and stored, `designmap.xml` (with `idPkg:` references to every part, layers, sections, text variables and hyperlinks), `META-INF/container.xml` and `metadata.xml` (XMP title, author, description, keywords), `Resources/Fonts.xml`, `Graphic.xml`, `Preferences.xml`, `Styles.xml`, one `MasterSpreads/MasterSpread_*.xml` per master (a facing pair *X (Left)* / *X (Right)* becomes one two-page master spread), one `Spreads/Spread_*.xml` per page or facing pair, `Stories/Story_*.xml`, `XML/BackingStory.xml` and `XML/Tags.xml`. Every element carries a `Self` id.
 
@@ -67,13 +67,13 @@ What is written:
 - Text frames with their story, chain (`PreviousTextFrame`/`NextTextFrame`), columns, gutter, insets, vertical alignment, auto-size, ignore-wrap and first-baseline option; rectangles, ovals and polygons (preset and custom shapes as Bézier `PathGeometry`), lines with arrowheads, groups; pictures as a frame holding an `Image` whose bytes are embedded in `Contents` (base64) with a `Link` naming the file, so the package needs no external files; rotation and flips through `ItemTransform`; opacity (`BlendingSetting`), text wrap (`TextWrapPreference`), layers (`ItemLayer`), lock, visibility, names and alternative text.
 - Stories as `ParagraphStyleRange` / `CharacterStyleRange` with local overrides, forced line breaks (`&#x2028;`), tabs, hyperlinks (`HyperlinkTextSource` plus `Hyperlink` destinations in the design map), footnotes as `Footnote` elements, objects anchored in text nested in their character range with an `AnchoredObjectSetting`, fields as their last displayed text, and tables as InDesign tables (`Table`/`Row`/`Column`/`Cell`) in a story shown by a text frame at the table's position. Text on a path is written as the path with a `TextPath` child and its own story.
 
-Known losses (what InDesign will not see, or what a round trip through QuillPress changes):
+Known losses (what InDesign will not see, or what a round trip through Anne's Press changes):
 
 - Picture crop, fit and position inside the frame become a fitting option only; picture adjustments (brightness, contrast, saturation, grayscale), image fills and pattern fills, effects (shadow, glow, soft edge), the `behind` wrap mode, guides, page notes, comments and the document's Quick Access Bar are not written.
 - Fields (page numbers, dates, variables) are written as their last displayed text, not as live InDesign markers.
-- Re-importing a package QuillPress wrote: tables come back as tab-separated rows in a text frame (the importer flattens tables); text on a path comes back as its path only (the importer does not read `TextPath`); anchored objects come back as free objects near their story's first frame; a flipped object comes back rotated rather than flipped, and a shape made from a preset comes back as a custom path with the path's own bounds as its box (a preset whose drawing does not fill its box, such as a star, shrinks to the drawing).
+- Re-importing a package Anne's Press wrote: tables come back as tab-separated rows in a text frame (the importer flattens tables); text on a path comes back as its path only (the importer does not read `TextPath`); anchored objects come back as free objects near their story's first frame; a flipped object comes back rotated rather than flipped, and a shape made from a preset comes back as a custom path with the path's own bounds as its box (a preset whose drawing does not fill its box, such as a star, shrinks to the drawing).
 
-**.indd** (the binary document) has no public specification. QuillPress identifies it by its header and recovers its text (UTF-16 runs) and embedded pictures into frames you can lay out again. Ask InDesign for an IDML export for the real layout.
+**.indd** (the binary document) has no public specification. Anne's Press identifies it by its header and recovers its text (UTF-16 runs) and embedded pictures into frames you can lay out again. Ask InDesign for an IDML export for the real layout.
 
 ## Microsoft Publisher (.pub)
 
@@ -121,10 +121,10 @@ Pictures: the type is sniffed from the bytes (`mimeOf`), the pixel size read fro
 
 ## PDF export
 
-`src/export/pdf.ts` is QuillPress's own writer (no PDF library):
+`src/export/pdf.ts` is Anne's Press's own writer (no PDF library):
 
 - one PDF page per publication page (or per spread), with `/MediaBox` grown by the bleed and `/TrimBox`/`/BleedBox` set, crop marks optional, and `/PageLabels` from the sections;
-- text set from the same line layout as the screen (`src/render/text.ts`) in the publication's **own fonts, embedded as subsets**: every bundled family (Tinos, Arimo, Cousine, Carlito, Caladea, Gelasio, EB Garamond, Libre Baskerville, Lato, Merriweather, Open Sans, Courier Prime) and the names they stand in for (Times New Roman, Arial, Courier New, Calibri, Cambria, Georgia, Garamond, Baskerville, Aptos) are converted from WOFF to TrueType (`src/export/fonts/`), subset to the glyphs used and written as CIDFontType2 fonts with Identity-H encoding and a ToUnicode map, so any Unicode character the face has prints and copies out as text; fonts QuillPress does not bundle (Segoe UI, Verdana, Impact…) print in the same bundled fallback face the screen uses (Carlito, Tinos or Cousine), with a warning, so line breaks on paper match the screen; Latin Extended, Cyrillic and Greek come from the bundled faces' subsets, and characters no face has are counted in a warning; runs of one style are written as one `TJ` array with exact word adjustments so text extraction keeps the words apart;
+- text set from the same line layout as the screen (`src/render/text.ts`) in the publication's **own fonts, embedded as subsets**: every bundled family (Tinos, Arimo, Cousine, Carlito, Caladea, Gelasio, EB Garamond, Libre Baskerville, Lato, Merriweather, Open Sans, Courier Prime) and the names they stand in for (Times New Roman, Arial, Courier New, Calibri, Cambria, Georgia, Garamond, Baskerville, Aptos) are converted from WOFF to TrueType (`src/export/fonts/`), subset to the glyphs used and written as CIDFontType2 fonts with Identity-H encoding and a ToUnicode map, so any Unicode character the face has prints and copies out as text; fonts Anne's Press does not bundle (Segoe UI, Verdana, Impact…) print in the same bundled fallback face the screen uses (Carlito, Tinos or Cousine), with a warning, so line breaks on paper match the screen; Latin Extended, Cyrillic and Greek come from the bundled faces' subsets, and characters no face has are counted in a warning; runs of one style are written as one `TJ` array with exact word adjustments so text extraction keeps the words apart;
 - footnotes and their separator rules, anchored objects where the text put them, and text on a path glyph by glyph;
 - shapes and lines as paths (the preset geometry's SVG path is translated to PDF operators), fills (solid, axial and radial gradient shadings, hatch patterns as tiling patterns, picture fills), strokes, dashes, arrowheads, paragraph rules, drop shadows and glow blurred as on screen, soft edges as a feathered soft mask over the object (the same round feather the screen draws; drop shadows of soft-edged objects are cast by the feathered shape; without a canvas, as in tests, shadows are hard-edged and glow and soft edges are left out), run highlights, opacity (`ExtGState`) and link annotations;
 - pictures: JPEG embedded as is (`DCTDecode`, gray/RGB/CMYK), other formats decoded to RGB and compressed (`FlateDecode`) with an `SMask` for transparency; without a canvas (tests, Node) PNG is decoded by `src/io/png.ts`;

@@ -28,7 +28,7 @@ export async function importPageMaker(data: Uint8Array, name: string): Promise<L
 
 interface Ctx { pub: Pub; env: TextEnv; warnings: string[]; counts: Record<string, number>; missingPictures: number; metafiles: number; nonPrinting: number }
 
-/** Layer for objects PageMaker marks non-printing (QuillPress layers have no print switch of their own). */
+/** Layer for objects PageMaker marks non-printing (Anne's Press layers have no print switch of their own). */
 const NON_PRINTING_LAYER = 'pm-nonprinting';
 
 const r2 = (v: number) => Math.round(v * 100) / 100;

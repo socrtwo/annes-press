@@ -61,7 +61,7 @@ export function decode(b: Uint8Array, encoding: 'windows-1252' | 'macintosh'): s
 }
 
 // ------------------------------------------------------------------------------------------
-// Conversion to QuillPress paragraphs
+// Conversion to Anne's Press paragraphs
 
 export function runProps(f: CharFormat | undefined): RunProps {
   const p: RunProps = {};

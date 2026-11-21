@@ -1,5 +1,5 @@
 /**
- * PDF export with QuillPress's own writer (no dependency). Pages are written as vector content that
+ * PDF export with Anne's Press's own writer (no dependency). Pages are written as vector content that
  * matches the screen renderer (src/render/page.ts): shapes and frames as paths with solid, gradient
  * (shadings), pattern and picture fills, line ends and drop shadows (pdfPaint.ts); text as positioned
  * runs; pictures as embedded JPEG (DCTDecode) or decoded RGB (FlateDecode) with their adjustments
@@ -689,7 +689,7 @@ export async function pubToPdf(pub: Pub, opts: PdfOptions = {}): Promise<Uint8Ar
   const catalog = w.add(`<< /Type /Catalog /Pages ${pagesObj} 0 R${labels} >>`);
   const p = pub.data.props;
   const date = (t?: number) => { const d = new Date(t || Date.now()); const z = (v: number) => String(v).padStart(2, '0'); return `(D:${d.getUTCFullYear()}${z(d.getUTCMonth() + 1)}${z(d.getUTCDate())}${z(d.getUTCHours())}${z(d.getUTCMinutes())}${z(d.getUTCSeconds())}Z)`; };
-  const info = w.add(`<< /Producer (QuillPress) /Creator (QuillPress)${p.title ? ` /Title ${pdfTextString(p.title)}` : ''}${p.author ? ` /Author ${pdfTextString(p.author)}` : ''}${p.subject ? ` /Subject ${pdfTextString(p.subject)}` : ''}${p.keywords ? ` /Keywords ${pdfTextString(p.keywords)}` : ''} /CreationDate ${date(p.created)} /ModDate ${date(p.modified)} >>`);
+  const info = w.add(`<< /Producer (Anne\'s Press) /Creator (Anne\'s Press)${p.title ? ` /Title ${pdfTextString(p.title)}` : ''}${p.author ? ` /Author ${pdfTextString(p.author)}` : ''}${p.subject ? ` /Subject ${pdfTextString(p.subject)}` : ''}${p.keywords ? ` /Keywords ${pdfTextString(p.keywords)}` : ''} /CreationDate ${date(p.created)} /ModDate ${date(p.modified)} >>`);
   return w.build(catalog, info);
 }
 

@@ -1,6 +1,6 @@
 {
-  "name": "QuillPress",
-  "short_name": "QuillPress",
+  "name": "Anne's Press",
+  "short_name": "Anne's Press",
   "description": "An open-source desktop publishing and page layout app: frame-based pages, master pages, linked text, styles and PDF export, with a complete, customizable command library.",
   "id": "./",
   "start_url": "./",

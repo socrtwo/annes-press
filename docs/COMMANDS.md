@@ -1,6 +1,6 @@
-# QuillPress Command Reference
+# Anne's Press Command Reference
 
-QuillPress ships **549 commands**. Every one can be placed on the Quick Access Bar, added to a custom tab, bound to a keyboard shortcut, recorded in a macro, or found with command search (Alt+Q).
+Anne's Press ships **549 commands**. Every one can be placed on the Quick Access Bar, added to a custom tab, bound to a keyboard shortcut, recorded in a macro, or found with command search (Alt+Q).
 
 176 of them are "Commands Not in the Tabs" — reachable through the Quick Access Bar chooser, Customize Tabs, the command search, or menus — so nothing the app can do is hidden.
 
@@ -37,10 +37,10 @@ This file is generated from the source by `npm run catalog`; a unit test fails w
 | Close | Close | Ctrl+w, Ctrl+F4 | `file.close` | not in tabs |
 | Close All | Close |  | `file.closeAll` | not in tabs |
 | Exit | Close |  | `file.exit` | not in tabs |
-| Export as Encrypted QuillPress Publication | Export |  | `file.export.qppe` | not in tabs |
+| Export as Anne's Press JSON | Export |  | `file.export.json` | not in tabs |
+| Export as Anne's Press Publication | Export |  | `file.export.qpp` | not in tabs |
+| Export as Encrypted Anne's Press Publication | Export |  | `file.export.qppe` | not in tabs |
 | Export as InDesign Markup (IDML) | Export |  | `file.export.idml` | not in tabs |
-| Export as QuillPress JSON | Export |  | `file.export.json` | not in tabs |
-| Export as QuillPress Publication | Export |  | `file.export.qpp` | not in tabs |
 | Export as Scribus Document | Export |  | `file.export.sla` | not in tabs |
 | Export Current Page as SVG | Export |  | `file.export.svg` | not in tabs |
 | Export Pages as Pictures… | Export |  | `file.export.images` | not in tabs |
@@ -574,7 +574,7 @@ This file is generated from the source by `npm run catalog`; a unit test fails w
 
 | Command | Group | Shortcut | ID | Notes |
 |---|---|---|---|---|
-| About QuillPress | Help |  | `help.about` |  |
+| About Anne's Press | Help |  | `help.about` |  |
 | Check for Updates | Help |  | `help.updates` | not in tabs |
 | Command Reference | Help |  | `help.commandReference` |  |
 | Help | Help | F1 | `help.help` |  |

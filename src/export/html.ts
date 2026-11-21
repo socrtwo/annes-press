@@ -51,7 +51,7 @@ export async function pubToHtml(pub: Pub, opts: HtmlOptions = {}): Promise<strin
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${escHtml(title)}</title>
-<meta name="generator" content="QuillPress">
+<meta name="generator" content="Anne\'s Press">
 ${pub.data.props.author ? `<meta name="author" content="${escHtml(pub.data.props.author)}">` : ''}
 <style>
 ${css}

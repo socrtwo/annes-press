@@ -6,7 +6,7 @@ labels: enhancement
 assignees: ''
 ---
 
-**What would you like QuillPress to do?**
+**What would you like Anne's Press to do?**
 A clear description of the feature or command.
 
 **Where should it live?**

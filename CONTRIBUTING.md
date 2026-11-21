@@ -1,6 +1,6 @@
-# Contributing to QuillPress
+# Contributing to Anne's Press
 
-Thank you for your interest. QuillPress is a first working version; the most useful contributions are:
+Thank you for your interest. Anne's Press is a first working version; the most useful contributions are:
 
 - **Bug reports** with the steps and, when the problem involves a file, a publication you made yourself (or that is openly licensed). Use the *Bug report* template.
 - **Missing commands and ideas** from other page layout software, with corrections to [docs/INNOVATIONS.md](docs/INNOVATIONS.md) or [docs/QAT.md](docs/QAT.md). Use the *Feature request* template.
@@ -26,4 +26,4 @@ npm run catalog    # regenerates docs/COMMANDS.md (a test fails when it is stale
 npm run e2e        # Playwright smoke test against the production build
 ```
 
-Keep pull requests focused, include tests for model, text flow, file-format and recovery changes, and run the type check, the tests and the catalog before submitting. The shared shell files (`src/ui/shell.ts`, `src/ui/dialog.ts`, `src/ai/*`, `src/proof/*`, `src/platform/native.ts`…) are kept as close to the sister apps as possible so fixes port across the suite; change them only for what QuillPress needs.
+Keep pull requests focused, include tests for model, text flow, file-format and recovery changes, and run the type check, the tests and the catalog before submitting. The shared shell files (`src/ui/shell.ts`, `src/ui/dialog.ts`, `src/ai/*`, `src/proof/*`, `src/platform/native.ts`…) are kept as close to the sister apps as possible so fixes port across the suite; change them only for what Anne's Press needs.

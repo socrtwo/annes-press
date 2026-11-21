@@ -6,7 +6,7 @@
  * in innerHTML or navigation must pass through here.
  */
 
-/** Schemes QuillPress will hand to the system browser or mail/phone apps. */
+/** Schemes Anne's Press will hand to the system browser or mail/phone apps. */
 const SAFE_SCHEMES = /^(https?|mailto|tel|ftp|sms|geo):/i;
 
 export function isSafeExternalUrl(url: string): boolean {
@@ -51,7 +51,7 @@ const SAFE_STYLE = /^[\w\s:;.,%#()'"-]*$/;
 
 /**
  * Allow-list sanitizer for generated-block caches (TOC, index, bibliography...): only the
- * tags and attributes QuillPress itself generates survive.
+ * tags and attributes Anne's Press itself generates survive.
  */
 export function sanitizeGeneratedHtml(html: string): string {
   if (!html) return '';

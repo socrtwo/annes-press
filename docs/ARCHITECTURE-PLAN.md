@@ -1,10 +1,10 @@
 # Architecture plan
 
-The design QuillPress was built to, and what remains. [ARCHITECTURE.md](ARCHITECTURE.md) describes the code as it is; this file keeps the intent and the parts not built yet, so the two can be compared.
+The design Anne's Press was built to, and what remains. [ARCHITECTURE.md](ARCHITECTURE.md) describes the code as it is; this file keeps the intent and the parts not built yet, so the two can be compared.
 
 ## Summary
 
-QuillPress is a TypeScript web application built with **Vite** and tested with **vitest**; Capacitor 8 packages it for Android and iOS, Electron for the desktop, and the build is a PWA. It reuses the Quill suite shell unchanged wherever it can (registry, ribbon, QAT, customize dialogs, command search, macros, AI providers and wizard, dictionaries, recovery engine, platform layer) and adds a frame-based publication model, a text layout engine, an SVG page renderer, a canvas editor and its own exporters.
+Anne's Press is a TypeScript web application built with **Vite** and tested with **vitest**; Capacitor 8 packages it for Android and iOS, Electron for the desktop, and the build is a PWA. It reuses the Anne's Office suite shell unchanged wherever it can (registry, ribbon, QAT, customize dialogs, command search, macros, AI providers and wizard, dictionaries, recovery engine, platform layer) and adds a frame-based publication model, a text layout engine, an SVG page renderer, a canvas editor and its own exporters.
 
 ## Design decisions
 
@@ -30,7 +30,7 @@ Everything in [ARCHITECTURE.md](ARCHITECTURE.md): model with transactions, text 
 | Pictures | Clipping paths from alpha for tight wrap; color profiles; user fonts from files | M4 |
 | Formats | IDML, Publisher, MIF import; PDF placement; EPUB and PDF/X export; data merge from CSV | M5 |
 | Review | Track changes in stories; visual compare | M6 |
-| Suite | Place QuillPen documents with styles mapped; send PDFs to QuillFolio; charts from QuillGrid | M6 |
+| Suite | Place Anne's Pen documents with styles mapped; send PDFs to Anne's Folio; charts from Anne's Grid | M6 |
 | Platform | External font folders on the desktop; printing with printer marks through the OS dialog | M5 |
 
 See [ROADMAP.md](ROADMAP.md) for the order.

@@ -4,7 +4,7 @@
  * PostScript name), embedding permissions (OS/2 fsType), and glyph subsetting (loca/glyf, with
  * composite components kept) for TrueType outlines. CFF-based OpenType fonts ("OTTO") are read for
  * their metrics and names; their outlines are embedded whole. Written from the OpenType
- * specification; only what QuillPress needs.
+ * specification; only what Anne's Press needs.
  */
 import { buildSfnt, tableChecksum, type SfntTable } from './woff';
 

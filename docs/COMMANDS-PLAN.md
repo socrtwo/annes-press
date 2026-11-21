@@ -1,6 +1,6 @@
-# QuillPress command plan
+# Anne's Press command plan
 
-> The planned command inventory, tab by tab. Every id in backticks is a command the app has or will have; `scripts/plan-ids.ts` reads them, and the catalog test reports how many are implemented. Ids are `area.name`; the shared ids (file, edit, view, help, dev, ai setup) match the other Quill apps so settings and macros port across the suite. The generated [COMMANDS.md](COMMANDS.md) lists what ships today.
+> The planned command inventory, tab by tab. Every id in backticks is a command the app has or will have; `scripts/plan-ids.ts` reads them, and the catalog test reports how many are implemented. Ids are `area.name`; the shared ids (file, edit, view, help, dev, ai setup) match the other Anne's Office apps so settings and macros port across the suite. The generated [COMMANDS.md](COMMANDS.md) lists what ships today.
 
 ## Principles
 
@@ -44,7 +44,7 @@ File: new, open, recover, save, export, print, share, info, options.
 
 ### Info
 
-- `file.encrypt` — Encrypt with Password: Save an AES-256 encrypted QuillPress copy (.qppe)
+- `file.encrypt` — Encrypt with Password: Save an AES-256 encrypted Anne's Press copy (.qppe)
 - `file.inspect` — Inspect Publication: Find and remove comments, page notes, hidden objects, off-page content, unused pictures and personal information before sharing
 - `file.markFinal` — Mark as Final: Make the publication read-only so readers know it is finished
 - `file.readOnly` — Open Read-Only: Protect this tab from changes until you turn this off
@@ -56,9 +56,9 @@ File: new, open, recover, save, export, print, share, info, options.
 
 ### Export
 
-- `file.export.qppe` — Export as Encrypted QuillPress Publication
-- `file.export.json` — Export as QuillPress JSON
-- `file.export.qpp` — Export as QuillPress Publication
+- `file.export.qppe` — Export as Encrypted Anne's Press Publication
+- `file.export.json` — Export as Anne's Press JSON
+- `file.export.qpp` — Export as Anne's Press Publication
 - `file.export.sla` — Export as Scribus Document
 - `file.export.idml` — Export as InDesign Markup (IDML): A package InDesign opens: spreads, master spreads, frames and chains, stories with styles, swatches, layers, sections, pictures embedded
 - `file.export.svg` — Export Current Page as SVG
@@ -75,7 +75,7 @@ File: new, open, recover, save, export, print, share, info, options.
 
 ### Share
 
-- `file.email` — Email: Send the publication as an attachment (uses the system share sheet, which includes your mail app and QuillPost when installed)
+- `file.email` — Email: Send the publication as an attachment (uses the system share sheet, which includes your mail app and Anne's Post when installed)
 - `file.emailPdf` — Email as PDF
 - `file.share` — Share
 
@@ -711,7 +711,7 @@ Setup, several AIs, create, write, design, more.
 
 ### Create
 
-- `ai.draftPublication` — Draft Publication: Describe the publication; the AI writes the articles, then QuillPress lays them out on pages with headlines, decks, columns, sidebars and pull quotes
+- `ai.draftPublication` — Draft Publication: Describe the publication; the AI writes the articles, then Anne's Press lays them out on pages with headlines, decks, columns, sidebars and pull quotes
 - `ai.draftStory` — Draft Story: Write an article about a topic into the selected frame (or a new one)
 - `ai.decks` — Suggest Deck: A one-sentence summary to print under the headline
 - `ai.headlines` — Suggest Headlines: Headline ideas for the selected story; the chosen one replaces its heading (or is added above)
@@ -755,7 +755,7 @@ Macros and data.
 ### Data
 
 - `dev.exportJson` — Export Publication JSON
-- `dev.importJson` — Import Publication JSON: Open a QuillPress publication JSON file in a new tab
+- `dev.importJson` — Import Publication JSON: Open an Anne's Press publication JSON file in a new tab
 - `dev.inspect` — Inspect Selection: The selected object (or the current page) as JSON, for bug reports and scripts
 - `dev.tags` — Object Tags: Edit the selected object's tags (name = value, one per line) for scripts, bookmarks and exports
 
@@ -765,7 +765,7 @@ Help, shortcuts, command reference, tour, about.
 
 ### Help
 
-- `help.about` — About QuillPress
+- `help.about` — About Anne's Press
 - `help.updates` — Check for Updates: Open the releases page to compare with this version
 - `help.commandReference` — Command Reference: Every command, by tab
 - `help.help` — Help (F1)

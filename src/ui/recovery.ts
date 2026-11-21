@@ -159,14 +159,14 @@ unzip damaged.qpp 'media/*' -d pictures</code></pre>
     <p>Google Drive and OneDrive keep versions of every file: open the file's menu &gt; <b>Version history</b>.</p>
     <h3>2. Trash and recently deleted</h3>
     <p>Google Drive &gt; <b>Trash</b>, OneDrive &gt; <b>Recycle bin</b>, and the Files app's trash keep deleted files for about 30 days.</p>
-    <h3>3. QuillPress's own copies</h3>
+    <h3>3. Anne\'s Press's own copies</h3>
     <p>Open &gt; Recent keeps a cached copy of each file you opened here, and unsaved drafts are kept automatically.</p>`],
   ios: ['iOS / iPadOS', `
     <h3>1. Files &gt; Recently Deleted</h3><p>Files keeps deleted items for about 30 days.</p>
     <h3>2. iCloud Drive versions</h3><p>iCloud.com &gt; Drive &gt; Recently Deleted; some apps offer Browse All Versions.</p>
-    <h3>3. QuillPress's own copies</h3><p>Open &gt; Recent keeps a cached copy of each file you opened here, and unsaved drafts are kept automatically.</p>`],
+    <h3>3. Anne\'s Press's own copies</h3><p>Open &gt; Recent keeps a cached copy of each file you opened here, and unsaved drafts are kept automatically.</p>`],
   tools: ['More S2 recovery tools', `
-    <p>Free tools by the author of QuillPress's recovery engine, each specialized for one kind of damage:</p>
+    <p>Free tools by the author of Anne\'s Press's recovery engine, each specialized for one kind of damage:</p>
     <ul>
       <li>${link('https://socrtwo.github.io/Immortal-Zip/', 'Immortal Zip')} · ${link('https://socrtwo.github.io/xmltrncatorfixr-SF/app/', 'XML Truncator-Fixer')} · ${link('https://socrtwo.github.io/Universal-File-Repair-Tool/', 'Universal File Repair Tool')}</li>
       <li>${link('https://socrtwo.github.io/wordrecovery-SF/', 'Word Recovery')} · ${link('https://socrtwo.github.io/oorecovery-SF/', 'OO Recovery (OpenDocument)')} · ${link('https://socrtwo.github.io/file-fixer-bot/', 'File Fixer Bot')}</li>
@@ -198,7 +198,7 @@ export async function showManualRecovery(actions: ReportActions = {}): Promise<v
     const a = (e.target as HTMLElement).closest('a[data-external]') as HTMLAnchorElement | null;
     if (a) { e.preventDefault(); openExternal(a.href); }
   });
-  const intro = h('p', { class: 'ql-help' }, 'QuillPress can try every recovery method on a damaged publication (.qpp, .qppe, .sla or .json) or on any file that may hold text or pictures: pick it with "Recover a file…". The steps below find other copies of the file.');
+  const intro = h('p', { class: 'ql-help' }, 'Anne\'s Press can try every recovery method on a damaged publication (.qpp, .qppe, .sla or .json) or on any file that may hold text or pictures: pick it with "Recover a file…". The steps below find other copies of the file.');
   content.append(intro, tabs, pane);
   show(guess);
   await openDialog({

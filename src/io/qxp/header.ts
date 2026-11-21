@@ -62,7 +62,7 @@ export function readQxpHeader(b: Uint8Array): QxpHeader {
   r.seek(8);
   const version = r.u16();
   const label = versionLabel(version);
-  if (version < QXP_31_MAC || version > QXP_4) throw new Error(`${label} files are not supported; QuillPress reads QuarkXPress 3.1–4.1.`);
+  if (version < QXP_31_MAC || version > QXP_4) throw new Error(`${label} files are not supported; Anne\'s Press reads QuarkXPress 3.1–4.1.`);
   const h: QxpHeader = { bigEndian: be, version, label, encoding: be ? 'macintosh' : 'windows-1252', pagesCount: 0, masterPagesCount: 0, seed: 0, increment: 0, autoLeading: 0.2 };
   if (version >= QXP_4) {
     r.seek(12);
