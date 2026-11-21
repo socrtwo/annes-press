@@ -1,0 +1,403 @@
+import { describe, it, expect } from 'vitest';
+import { Pub, parasFromText } from '../../src/model/pub';
+import { layoutStory, bulletText, formatNumber, hyphenPoints, footnoteLabel, measure, cssFont, hangFraction } from '../../src/render/text';
+import { frameBoxes, storyLayout, oversetFrames, neededHeight, wrapExclusions, frameLines, layoutOptions } from '../../src/render/flow';
+import { pathTextGlyphs, pathTextLayout, pathTextNotes, PATH_TEXT_PRESETS } from '../../src/render/pathText';
+import { tableLayout } from '../../src/render/table';
+import { pageSvg } from '../../src/render/page';
+import { pubToPdf } from '../../src/export/pdf';
+import type { PathTextItem, TableItem } from '../../src/model/types';
+import { autoflowStory } from '../../src/edit/flowOps';
+import { LOREM } from '../../src/templates/lorem';
+
+const long = LOREM.join('\n');
+
+describe('text layout', () => {
+  it('breaks a paragraph into lines that fit the box', () => {
+    const boxes = [{ frame: 'f', col: 0, x: 0, y: 0, w: 200, h: 1000, page: 0 }];
+    const r = layoutStory(parasFromText(LOREM[0]), { boxes, resolve: () => ({ props: {}, run: { size: 12, font: 'Tinos' } }), resolveRun: (b: any, x: any) => ({ ...b, ...x }) } as any);
+    expect(r.lines.length).toBeGreaterThan(3);
+    for (const l of r.lines) expect(l.width).toBeLessThanOrEqual(201);
+    expect(r.overset).toBeUndefined();
+  });
+
+  it('measures tab stops from the frame edge and stops at a hanging indent', () => {
+    const boxes = [{ frame: 'f', col: 0, x: 10, y: 0, w: 400, h: 200, page: 0 }];
+    const lay = (props: any, text: string) => layoutStory(parasFromText(text), { boxes, resolve: () => ({ props, run: { size: 12, font: 'Tinos' } }), resolveRun: (b: any, x: any) => ({ ...b, ...x }) } as any);
+    const at = (r: ReturnType<typeof lay>, word: string) => { for (const l of r.lines) for (const sg of l.segs) if (sg.text === word) return l.x + sg.x; return NaN; };
+    // A hanging indent is a stop: the text after the number lines up with the left indent.
+    expect(at(lay({ marL: 36, indent: -36 }, '1.\tFirst'), 'First')).toBeCloseTo(10 + 36, 3);
+    // A stop at 120 is 120 from the frame's text edge, whatever the paragraph's left indent.
+    expect(at(lay({ marL: 50, tabs: [{ pos: 120, align: 'l' }] }, 'a\tb'), 'b')).toBeCloseTo(10 + 120, 3);
+    // Default stops are multiples of the interval from the frame edge too.
+    expect(at(lay({ marL: 20 }, 'a\tb'), 'b')).toBeCloseTo(10 + 36, 3);
+  });
+
+  it('reports overset when text does not fit', () => {
+    const boxes = [{ frame: 'f', col: 0, x: 0, y: 0, w: 200, h: 40, page: 0 }];
+    const r = layoutStory(parasFromText(long), { boxes, resolve: () => ({ props: {}, run: { size: 12 } }), resolveRun: (b: any, x: any) => ({ ...b, ...x }) } as any);
+    expect(r.overset).toBeTruthy();
+    expect(r.lines.length).toBeLessThan(6);
+  });
+
+  it('numbers lists and finds hyphenation points', () => {
+    expect(bulletText({ kind: 'num', scheme: 'arabicPeriod' }, 2)).toBe('3.');
+    expect(bulletText({ kind: 'num', scheme: 'romanLcPeriod' }, 3)).toBe('iv.');
+    expect(bulletText({ kind: 'char', char: '•' }, 0)).toBe('•');
+    expect(formatNumber(4, 'alphaUcPeriod')).toBe('D.');
+    const pts = hyphenPoints('typesetting');
+    expect(Array.isArray(pts)).toBe(true);
+  });
+});
+
+describe('frames and flow', () => {
+  it('splits a frame into column boxes inside its insets', () => {
+    const pub = Pub.blank();
+    const f = pub.newTextFrame({ x: 100, y: 100, w: 300, h: 200 });
+    f.columns = 2; f.gutter = 20; f.insets = [10, 10, 10, 10];
+    pub.pages[0].items.push(f);
+    const boxes = frameBoxes(f, pub.pages[0], 0, pub);
+    expect(boxes).toHaveLength(2);
+    expect(boxes[0].x).toBe(110);
+    expect(boxes[0].w).toBe(130);
+    expect(boxes[1].x).toBe(260);
+    expect(boxes[0].h).toBe(180);
+  });
+
+  it('flows a story through linked frames and autoflows the rest', () => {
+    const pub = Pub.blank();
+    const f = pub.newTextFrame({ x: 36, y: 36, w: 200, h: 60 }, parasFromText(long));
+    pub.pages[0].items.push(f);
+    expect(oversetFrames(pub).map((o) => o.frame.id)).toEqual([f.id]);
+    const added = autoflowStory(pub, f);
+    expect(added).toBeGreaterThan(0);
+    expect(pub.pages.length).toBeGreaterThan(1);
+    expect(oversetFrames(pub)).toHaveLength(0);
+    const chain = pub.chainOf(f.story);
+    expect(chain[0].id).toBe(f.id);
+    expect(chain.length).toBe(added + 1);
+    const lay = storyLayout(pub, f.story)!;
+    expect(lay.r.lines.some((l) => l.box > 0)).toBe(true);
+  });
+
+  it('computes the height a frame needs and wrap exclusions from objects above', () => {
+    const pub = Pub.blank();
+    const f = pub.newTextFrame({ x: 36, y: 36, w: 300, h: 20 }, parasFromText(LOREM[1]));
+    pub.pages[0].items.push(f);
+    expect(neededHeight(pub, f)).toBeGreaterThan(40);
+    pub.pages[0].items.push({ id: 'p', kind: 'picture', x: 100, y: 50, w: 80, h: 80, wrap: { mode: 'square', offset: 6 } } as any);
+    const ex = wrapExclusions(f, pub.pages[0], pub);
+    expect(ex).toHaveLength(1);
+    expect(ex[0].x).toBeLessThan(100);
+    f.ignoreWrap = true;
+    expect(wrapExclusions(f, pub.pages[0], pub)).toHaveLength(0);
+  });
+});
+
+describe('anchored objects', () => {
+  const storyWith = (w = 300) => {
+    const pub = Pub.blank();
+    const f = pub.newTextFrame({ x: 36, y: 36, w, h: 400 }, parasFromText(`${LOREM[0]}\n${LOREM[1]}`));
+    pub.pages[0].items.push(f);
+    const pic = { id: 'pic1', kind: 'picture', x: 0, y: 0, w: 60, h: 40, anchored: { story: f.story, mode: 'inline' } } as any;
+    pub.pages[0].items.push(pic);
+    const s = pub.story(f.story)!;
+    // Anchor after the third word of the second paragraph.
+    const p = s.paras[1];
+    const text = p.runs[0].text;
+    const off = text.split(' ').slice(0, 3).join(' ').length + 1;
+    p.runs = [{ text: text.slice(0, off) }, { text: '￼', anchor: 'pic1' }, { text: text.slice(off) }];
+    return { pub, f, pic, s };
+  };
+
+  it('widens the line for an inline object and writes its position', () => {
+    const { pub, f, pic } = storyWith();
+    const lay = storyLayout(pub, f.story)!;
+    const line = lay.r.lines.find((l) => l.anchors?.length)!;
+    expect(line).toBeTruthy();
+    expect(line.height).toBeGreaterThanOrEqual(40);
+    const plain = lay.r.lines.find((l) => !l.anchors)!;
+    expect(line.height).toBeGreaterThan(plain.height);
+    expect(line.anchors![0].id).toBe('pic1');
+    // The object sits with its bottom on the baseline, at the token's x.
+    expect(pic.y).toBeCloseTo(line.y - 40, 1);
+    expect(pic.x).toBeGreaterThanOrEqual(f.x);
+    expect(pic.x + pic.w).toBeLessThanOrEqual(f.x + f.w + 0.5);
+  });
+
+  it('moves the object with the text when the frame narrows or the story flows on', () => {
+    const { pub, f, pic } = storyWith();
+    storyLayout(pub, f.story);
+    const before = { x: pic.x, y: pic.y };
+    f.w = 160; pub.changed();
+    storyLayout(pub, f.story);
+    expect(pic.y).toBeGreaterThan(before.y);
+    // A second page and a short first frame: the anchor's line lands on page 2 and the picture moves there.
+    f.h = 30; pub.changed();
+    pub.pages.push({ id: 'pg2', master: pub.data.masters[0].id, items: [] });
+    const f2 = { ...pub.newTextFrame({ x: 36, y: 36, w: 300, h: 600 }), story: f.story, prev: f.id } as any;
+    pub.data.stories.pop();
+    f.next = f2.id;
+    pub.pages[1].items.push(f2);
+    pub.changed();
+    storyLayout(pub, f.story);
+    expect(pub.pages[0].items.some((e) => e.id === 'pic1')).toBe(false);
+    expect(pub.pages[1].items.some((e) => e.id === 'pic1')).toBe(true);
+    expect(pic.y).toBeGreaterThan(36);
+  });
+
+  it('places objects above the line and at an offset from the anchor', () => {
+    const { pub, f, pic } = storyWith();
+    pic.anchored = { story: f.story, mode: 'above', align: 'ctr' };
+    pub.changed();
+    let lay = storyLayout(pub, f.story)!;
+    let line = lay.r.lines.find((l) => l.anchors?.length)!;
+    expect(pic.y + pic.h).toBeLessThanOrEqual(line.y - line.ascent + 0.01);
+    expect(pic.x).toBeCloseTo(f.x + 4 + (f.w - 8 - pic.w) / 2, 0);
+    pic.anchored = { story: f.story, mode: 'custom', dx: 100, dy: 20 };
+    pub.changed();
+    lay = storyLayout(pub, f.story)!;
+    line = lay.r.lines.find((l) => l.anchors?.length)!;
+    expect(pic.x).toBeCloseTo(line.anchors![0].ax + 100, 1);
+    expect(pic.y).toBeCloseTo(line.y + 20, 1);
+    expect(line.height).toBeLessThan(40);
+  });
+});
+
+describe('footnotes', () => {
+  const withNotes = (h = 200, opts?: any) => {
+    const pub = Pub.blank();
+    if (opts) pub.data.footnoteOptions = { ...pub.data.footnoteOptions, scheme: 'arabicPlain', restart: 'story', separator: { width: 0.5, length: 0.33, space: 6 }, style: 'Footnote', placement: 'column', ...opts };
+    const f = pub.newTextFrame({ x: 36, y: 36, w: 300, h }, parasFromText(`${LOREM[0]}\n${LOREM[1]}`));
+    pub.pages[0].items.push(f);
+    const s = pub.story(f.story)!;
+    s.footnotes = [{ id: 'fn1', paras: [{ style: 'Footnote', runs: [{ text: 'First source, page 3.' }] }] }, { id: 'fn2', paras: [{ style: 'Footnote', runs: [{ text: 'Second source.' }] }] }];
+    s.paras[0].runs.push({ text: '1', footnote: 'fn1', baseline: 33 });
+    s.paras[1].runs.push({ text: '2', footnote: 'fn2', baseline: 33 });
+    return { pub, f, s };
+  };
+
+  it('reserves space at the bottom of the column and sets the note lines last', () => {
+    const plain = Pub.blank();
+    const pf = plain.newTextFrame({ x: 36, y: 36, w: 300, h: 200 }, parasFromText(`${LOREM[0]}\n${LOREM[1]}`));
+    plain.pages[0].items.push(pf);
+    // Over a range of frame heights the reservation costs body lines, and never adds any.
+    let fewer = 0;
+    for (let hh = 150; hh <= 220; hh += 7) {
+      pf.h = hh; plain.changed();
+      const plainLines = storyLayout(plain, pf.story)!.r.lines.length;
+      const { pub: p2, f: f2 } = withNotes(hh);
+      const bodyLines = storyLayout(p2, f2.story)!.r.lines.filter((l) => !l.footnote).length;
+      expect(bodyLines).toBeLessThanOrEqual(plainLines);
+      if (bodyLines < plainLines) fewer++;
+    }
+    expect(fewer).toBeGreaterThan(0);
+    const { pub, f } = withNotes(200);
+    const lay = storyLayout(pub, f.story)!;
+    const body = lay.r.lines.filter((l) => !l.footnote);
+    const notes = lay.r.lines.filter((l) => l.footnote);
+    expect(notes.length).toBeGreaterThan(0);
+    expect(lay.r.separators).toHaveLength(1);
+    const lastBody = Math.max(...body.map((l) => l.y));
+    expect(Math.min(...notes.map((l) => l.y))).toBeGreaterThan(lastBody);
+    expect(Math.max(...notes.map((l) => l.y))).toBeLessThanOrEqual(f.y + f.h);
+    expect(notes[0].segs[0].text).toBe('1');
+    expect(lay.r.footnoteLabels!.fn1).toBe('1');
+    const fl = frameLines(pub, f);
+    expect(fl.separators).toHaveLength(1);
+    expect(fl.lines.some((l) => l.footnote)).toBe(true);
+  });
+
+  it('numbers per story, restarts per page when set, and offers symbols', () => {
+    const { pub, f } = withNotes(2000);
+    let lay = storyLayout(pub, f.story)!;
+    expect(lay.r.footnoteLabels).toEqual({ fn1: '1', fn2: '2' });
+    const refs = lay.r.lines.filter((l) => !l.footnote).flatMap((l) => l.segs.filter((s) => s.footnote).map((s) => s.text));
+    expect(refs).toEqual(['1', '2']);
+    // Two frames on two pages: the second reference restarts at 1 on page 2.
+    f.h = 120;
+    pub.pages.push({ id: 'pg2', master: pub.data.masters[0].id, items: [] });
+    const f2 = { ...pub.newTextFrame({ x: 36, y: 36, w: 300, h: 2000 }), story: f.story, prev: f.id } as any;
+    pub.data.stories.pop();
+    f.next = f2.id;
+    pub.pages[1].items.push(f2);
+    pub.data.footnoteOptions = { ...pub.data.footnoteOptions!, scheme: 'arabicPlain', restart: 'page', separator: { width: 0.5, length: 0.33, space: 6 }, style: 'Footnote', placement: 'column' };
+    pub.changed();
+    lay = storyLayout(pub, f.story)!;
+    expect(lay.r.footnoteLabels).toEqual({ fn1: '1', fn2: '1' });
+    expect(lay.r.lines.filter((l) => l.footnote).map((l) => l.box)).toEqual([0, 1]);
+    expect(footnoteLabel(3, 'symbols')).toBe('‡');
+    expect(footnoteLabel(8, 'symbols')).toBe('††');
+    expect(footnoteLabel(4, 'romanLcPeriod')).toBe('iv.');
+  });
+});
+
+describe('text on a path', () => {
+  const item = (preset: string, text: string, extra: Partial<PathTextItem> = {}): PathTextItem => {
+    const p = PATH_TEXT_PRESETS[preset];
+    return { id: 'pt', kind: 'pathText', x: 100, y: 200, w: p.w, h: p.h, path: { d: p.d, w: p.w, h: p.h }, text: [{ style: 'Body', runs: [{ text, size: 12 }] }], align: 'start', offset: 0, baseline: 0, ...extra };
+  };
+  const opts = { resolve: () => ({ props: {}, run: { size: 12, font: 'Tinos' } }), resolveRun: (b: any, r: any) => ({ ...b, ...r }) } as any;
+
+  it('sets characters along a straight line like a normal measurement', () => {
+    const it = item('line', 'Hello');
+    const g = pathTextGlyphs(it, opts);
+    expect(g.map((x) => x.ch).join('')).toBe('Hello');
+    const widths = [...'Hello'].map((c) => measure(c, cssFont({ size: 12 } as any, 12, 'Tinos')));
+    let s = 0;
+    g.forEach((x, i) => { expect(x.x).toBeCloseTo(100 + s + widths[i] / 2, 3); expect(x.y).toBeCloseTo(200 + 50, 3); expect(x.angle).toBeCloseTo(0, 3); s += widths[i]; });
+    const end = pathTextGlyphs(item('line', 'Hello', { align: 'end' }), opts);
+    expect(end[end.length - 1].x + end[end.length - 1].w / 2).toBeCloseTo(300, 1);
+    const just = pathTextGlyphs(item('line', 'Hello', { align: 'justify' }), opts);
+    expect(just[just.length - 1].x).toBeGreaterThan(g[g.length - 1].x);
+  });
+
+  it('spans 360 degrees around a circle and honors offset, baseline and flip', () => {
+    const text = 'ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOP';
+    const g = pathTextGlyphs(item('circle', text, { align: 'justify' }), opts);
+    expect(g.length).toBeGreaterThan(40);
+    const angles = g.map((x) => x.angle);
+    expect(Math.max(...angles) - Math.min(...angles)).toBeGreaterThan(300);
+    for (const x of g) expect(Math.hypot(x.x - 200, x.y - 300)).toBeCloseTo(100, 0);
+    const raised = pathTextGlyphs(item('circle', text, { align: 'justify', baseline: 10 }), opts);
+    for (const x of raised) expect(Math.hypot(x.x - 200, x.y - 300)).toBeCloseTo(110, 0);
+    const flipped = pathTextGlyphs(item('circle', 'AB', { flip: true }), opts);
+    expect(flipped[0].angle).toBeCloseTo(flipped[0].angle, 1);
+    expect(Math.abs(((flipped[0].angle - g[0].angle) % 360 + 360) % 360 - 180)).toBeLessThan(30);
+    const shifted = pathTextGlyphs(item('line', 'Hi', { offset: 40 }), opts);
+    expect(shifted[0].x).toBeGreaterThan(140);
+    const over = pathTextLayout(item('line', 'x'.repeat(400)), opts);
+    expect(over.overflow).toBeGreaterThan(0);
+  });
+});
+
+describe('footnotes in tables and path text, optical margin alignment', () => {
+  const noteTable = (): TableItem => ({
+    id: 't1', kind: 'table', x: 36, y: 36, w: 300, h: 44, cols: [150, 150],
+    rows: [
+      { h: 22, cells: [{ text: [{ style: 'Table Text', runs: [{ text: 'Alpha' }, { text: '1', footnote: 'fa', baseline: 33 }] }] }, { text: [{ style: 'Table Text', runs: [{ text: 'Beta' }] }] }] },
+      { h: 22, cells: [{ text: [{ style: 'Table Text', runs: [{ text: 'Gamma' }, { text: '9', footnote: 'fb', baseline: 33 }] }] }, { text: [] }] },
+    ],
+    footnotes: [{ id: 'fa', paras: [{ style: 'Footnote', runs: [{ text: 'First table note.' }] }] }, { id: 'fb', paras: [{ style: 'Footnote', runs: [{ text: 'Second table note.' }] }] }],
+  } as TableItem);
+
+  it('sets table notes under the rows, numbered per table in reading order, and grows the drawn height', () => {
+    const pub = Pub.blank();
+    const t = noteTable();
+    pub.pages[0].items.push(t);
+    const tl = tableLayout(pub, t, 0);
+    expect(tl.rowsH).toBe(44);
+    expect(tl.w).toBe(300);
+    expect(tl.notesH).toBeGreaterThan(10);
+    expect(tl.h).toBeCloseTo(44 + tl.notesH, 6);
+    expect(t.h).toBe(44);
+    expect(tl.labels).toEqual({ fa: '1', fb: '2' });
+    expect(tl.order.map((o) => o.label)).toEqual(['1', '2']);
+    expect(t.rows[1].cells[0].text[0].runs[1].text).toBe('2');
+    expect(tl.notes.length).toBeGreaterThanOrEqual(2);
+    for (const l of tl.notes) { expect(l.footnote).toBe(true); expect(l.y).toBeGreaterThan(tl.rowsH); }
+    expect(tl.notes.find((l) => l.footnoteId === 'fb')!.y).toBeGreaterThan(tl.notes.find((l) => l.footnoteId === 'fa')!.y);
+    expect(tl.separator!.y).toBeGreaterThan(tl.rowsH);
+    expect(tl.separator!.y).toBeLessThan(tl.notes[0].y);
+    // Without notes the layout is the plain grid.
+    const plain = tableLayout(pub, { ...noteTable(), footnotes: undefined }, 0);
+    expect(plain.notesH).toBe(0);
+    expect(plain.h).toBe(44);
+    const svg = pageSvg(pub, pub.pages[0], { mode: 'export' });
+    expect(svg).toContain('qp-table-notes');
+    expect(svg).toContain('>First<');
+    expect(svg).toContain('>Second<');
+    expect(svg).toContain('qp-fn-sep');
+    // Symbols scheme applies to table notes too.
+    pub.data.footnoteOptions = { ...pub.data.footnoteOptions!, scheme: 'symbols', restart: 'story', separator: { width: 0.5, length: 0.33, space: 6 }, style: 'Footnote', placement: 'column' };
+    expect(tableLayout(pub, t, 0).labels).toEqual({ fa: '*', fb: '†' });
+  });
+
+  it('sets a path text footnote as a smaller raised glyph and its note under the item box', () => {
+    const pub = Pub.blank();
+    const item = { id: 'p1', kind: 'pathText', x: 100, y: 200, w: 200, h: 100, path: { d: PATH_TEXT_PRESETS.line.d, w: 200, h: 100 }, text: [{ style: 'Body', runs: [{ text: 'Hi', size: 12 }, { text: 'x', footnote: 'fp', size: 12 }] }], align: 'start', offset: 0, baseline: 0, footnotes: [{ id: 'fp', paras: [{ style: 'Footnote', runs: [{ text: 'Path note.' }] }] }] } as PathTextItem;
+    const o = layoutOptions(pub, []);
+    const g = pathTextLayout(item, o).glyphs;
+    const ref = g.find((x) => x.footnote === 'fp')!;
+    expect(ref.ch).toBe('1');
+    expect(item.text[0].runs[1].text).toBe('1');
+    expect(ref.size).toBeCloseTo(12 * 0.67, 3);
+    expect(ref.y).toBeLessThan(g[0].y - 2);
+    const notes = pathTextNotes(item, o);
+    expect(notes.lines.length).toBeGreaterThan(0);
+    expect(notes.h).toBeGreaterThan(0);
+    expect(notes.separator!.y).toBeGreaterThan(item.h);
+    expect(notes.lines[0].y).toBeGreaterThan(notes.separator!.y);
+    expect(notes.lines[0].footnoteId).toBe('fp');
+    expect(notes.lines[0].segs.map((s) => s.text).join('')).toContain('Path note.');
+    expect(pathTextNotes({ ...item, footnotes: undefined }, o).h).toBe(0);
+    pub.pages[0].items.push(item);
+    const svg = pageSvg(pub, pub.pages[0], { mode: 'export' });
+    expect(svg).toContain('qp-pathtext-notes');
+    expect(svg).toContain('>Path<');
+    expect(svg).toContain('>note.<');
+  });
+
+  it('hangs punctuation outside the margins with optical margin alignment', () => {
+    expect(hangFraction('“', 'left')).toBe(1);
+    expect(hangFraction(',', 'right')).toBe(1);
+    expect(hangFraction('-', 'right')).toBe(0.5);
+    expect(hangFraction('A', 'left')).toBeCloseTo(0.2, 6);
+    expect(hangFraction('m', 'left')).toBe(0);
+    const boxes = [{ frame: 'f', col: 0, x: 100, y: 0, w: 200, h: 1000, page: 0 }];
+    const lay = (opt: boolean, align: string, size = 12, ref = 12) => layoutStory(parasFromText('“Alpha beta,'), { boxes, resolve: () => ({ props: { align, ...(opt ? { opticalMargin: true } : {}) }, run: { size, font: 'Tinos' } }), resolveRun: (b: any, x: any) => ({ ...b, ...x }), opticalMarginSize: ref } as any);
+    const plain = lay(false, 'justAll').lines[0];
+    expect(plain.x).toBeCloseTo(100, 6);
+    expect(plain.width).toBeCloseTo(200, 6);
+    const hung = lay(true, 'justAll').lines[0];
+    const css = cssFont({ size: 12 } as any, 12, 'Tinos');
+    expect(hung.x).toBeCloseTo(100 - measure('“', css), 3);
+    expect(hung.x + hung.width).toBeCloseTo(300 + measure(',', css), 3);
+    expect(hung.hang![0]).toBeCloseTo(measure('“', css), 3);
+    expect(hung.hang![1]).toBeCloseTo(measure(',', css), 3);
+    // Right-aligned text ends past the margin by the comma's width; left-aligned starts before it.
+    const right = lay(true, 'r').lines[0];
+    expect(right.x + right.width).toBeCloseTo(300 + measure(',', css), 3);
+    const left = lay(true, 'l').lines[0];
+    expect(left.x).toBeCloseTo(100 - measure('“', css), 3);
+    // The reference size scales the overhang: 24pt text hangs half as much at a 12pt reference, and never more than the glyph.
+    const big = lay(true, 'l', 24, 12).lines[0];
+    const css24 = cssFont({ size: 24 } as any, 24, 'Tinos');
+    expect(big.hang![0]).toBeCloseTo(measure('“', css24) * 0.5, 3);
+    const small = lay(true, 'l', 6, 12).lines[0];
+    const css6 = cssFont({ size: 6 } as any, 6, 'Tinos');
+    expect(small.hang![0]).toBeCloseTo(measure('“', css6), 3);
+    // Story-level switch and the paragraph's own setting.
+    const pub = Pub.blank();
+    const f = pub.newTextFrame({ x: 36, y: 36, w: 300, h: 200 }, parasFromText('“Quoted words here.'));
+    pub.pages[0].items.push(f);
+    const s = pub.story(f.story)!;
+    const x0 = storyLayout(pub, s.id)!.r.lines[0].x;
+    s.opticalMargin = true; pub.changed();
+    const x1 = storyLayout(pub, s.id)!.r.lines[0].x;
+    expect(x1).toBeLessThan(x0);
+    s.paras[0].opticalMargin = false; pub.changed();
+    expect(storyLayout(pub, s.id)!.r.lines[0].x).toBeCloseTo(x0, 6);
+    // Drop caps and bullets are not hung.
+    const drop = layoutStory(parasFromText('“Alpha beta gamma delta epsilon zeta eta theta iota kappa'), { boxes, resolve: () => ({ props: { opticalMargin: true, dropCap: { lines: 2, chars: 1 } }, run: { size: 12, font: 'Tinos' } }), resolveRun: (b: any, x: any) => ({ ...b, ...x }) } as any).lines[0];
+    expect(drop.hang?.[0] ?? 0).toBe(0);
+  });
+
+  it('writes table and path text notes to the PDF under their items', async () => {
+    const pub = Pub.blank();
+    const t = noteTable();
+    const item = { id: 'p1', kind: 'pathText', x: 100, y: 400, w: 200, h: 100, rot: 30, path: { d: PATH_TEXT_PRESETS.line.d, w: 200, h: 100 }, text: [{ style: 'Body', runs: [{ text: 'Hi', size: 12 }, { text: 'x', footnote: 'fp', size: 12 }] }], align: 'start', offset: 0, baseline: 0, footnotes: [{ id: 'fp', paras: [{ style: 'Footnote', runs: [{ text: 'Rotated note' }] }] }] } as PathTextItem;
+    pub.pages[0].items.push(t, item);
+    const s = new TextDecoder('latin1').decode(await pubToPdf(pub, {}));
+    expect(s.startsWith('%PDF-1.')).toBe(true);
+    // Both note areas draw a separator rule (0.5 wide, black) after their item.
+    expect((s.match(/0 G 0\.5 w /g) || []).length).toBeGreaterThanOrEqual(2);
+    // A plain table and path text make a shorter page stream.
+    const plain = new TextDecoder('latin1').decode(await pubToPdf(Object.assign(Pub.blank(), { }), {}));
+    void plain;
+    const pub2 = Pub.blank();
+    pub2.pages[0].items.push({ ...noteTable(), footnotes: undefined }, { ...item, footnotes: undefined });
+    const s2 = new TextDecoder('latin1').decode(await pubToPdf(pub2, {}));
+    expect(s.length).toBeGreaterThan(s2.length + 100);
+  });
+});

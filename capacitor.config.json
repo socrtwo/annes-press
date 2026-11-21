@@ -1,0 +1,10 @@
+{
+  "appId": "io.github.socrtwo.quillpress",
+  "appName": "Anne's Press",
+  "webDir": "dist",
+  "android": {
+    "allowMixedContent": false,
+    "captureInput": true,
+    "webContentsDebuggingEnabled": false
+  }
+}
